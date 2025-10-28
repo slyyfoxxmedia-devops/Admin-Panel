@@ -1,4 +1,27 @@
 import { useState } from 'react'
+import Dashboard from './components/Dashboard'
+import Analytics from './components/Analytics'
+import Users from './components/Users'
+import Billing from './components/Billing'
+import Escrow from './components/Escrow'
+import Products from './components/Products'
+import Licensing from './components/Licensing'
+import Compliance from './components/Compliance'
+import Email from './components/Email'
+import Forms from './components/Forms'
+import SocialModeration from './components/SocialModeration'
+import AWSSES from './components/AWSSES'
+import S3Storage from './components/S3Storage'
+import CMSAdmin from './components/CMSAdmin'
+import CRMAdmin from './components/CRMAdmin'
+import ReportsBI from './components/ReportsBI'
+import AuditLogs from './components/AuditLogs'
+import SystemHealth from './components/SystemHealth'
+import Notifications from './components/Notifications'
+import SearchIndex from './components/SearchIndex'
+import AudioProcessing from './components/AudioProcessing'
+import LivePreview from './components/LivePreview'
+import Integrations from './components/Integrations'
 
 const App = () => {
   const [activeSection, setActiveSection] = useState('dashboard')
@@ -14,6 +37,7 @@ const App = () => {
     { id: 'licensing', label: 'Licensing', icon: '🔑' },
     { id: 'compliance', label: 'Compliance', icon: '⚖️' },
     { id: 'email', label: 'Email', icon: '📧' },
+    { id: 'forms', label: 'Forms', icon: '📝' },
     { id: 'ses', label: 'AWS SES', icon: '📮' },
     { id: 's3', label: 'S3 Storage', icon: '🗄️' },
     { id: 'social-mod', label: 'Social Moderation', icon: '🛡️' },
@@ -63,99 +87,53 @@ const App = () => {
             {menuItems.find(item => item.id === activeSection)?.label}
           </h2>
           
-          {activeSection === 'dashboard' && (
-            <div className="space-y-8">
-              {/* Key Metrics */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div className="bg-white p-6 rounded-lg shadow border">
-                  <h3 className="text-lg font-semibold text-gray-700">Total Users</h3>
-                  <p className="text-3xl font-bold text-burnt-orange">12,543</p>
-                  <p className="text-sm text-gray-500">+5.2% this month</p>
-                </div>
-                <div className="bg-white p-6 rounded-lg shadow border">
-                  <h3 className="text-lg font-semibold text-gray-700">Revenue</h3>
-                  <p className="text-3xl font-bold text-burnt-orange">$45,231</p>
-                  <p className="text-sm text-gray-500">+12.8% this month</p>
-                </div>
-                <div className="bg-white p-6 rounded-lg shadow border">
-                  <h3 className="text-lg font-semibold text-gray-700">Active Licenses</h3>
-                  <p className="text-3xl font-bold text-burnt-orange">8,921</p>
-                  <p className="text-sm text-gray-500">+3.1% this month</p>
-                </div>
-                <div className="bg-white p-6 rounded-lg shadow border">
-                  <h3 className="text-lg font-semibold text-gray-700">System Health</h3>
-                  <p className="text-3xl font-bold text-green-500">99.9%</p>
-                  <p className="text-sm text-gray-500">All systems operational</p>
-                </div>
-              </div>
-
-              {/* Platform Status */}
-              <div className="bg-white p-6 rounded-lg shadow border">
-                <h3 className="text-xl font-semibold text-gray-800 mb-4">Platform Status</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                  <div className="flex items-center justify-between p-3 bg-green-50 rounded">
-                    <span className="text-sm font-medium">Marketplace</span>
-                    <span className="text-green-600 font-bold">Online</span>
-                  </div>
-                  <div className="flex items-center justify-between p-3 bg-green-50 rounded">
-                    <span className="text-sm font-medium">Seller Dashboard</span>
-                    <span className="text-green-600 font-bold">Online</span>
-                  </div>
-                  <div className="flex items-center justify-between p-3 bg-yellow-50 rounded">
-                    <span className="text-sm font-medium">Social Platform</span>
-                    <span className="text-yellow-600 font-bold">Building</span>
-                  </div>
-                  <div className="flex items-center justify-between p-3 bg-yellow-50 rounded">
-                    <span className="text-sm font-medium">Fantasy Sports</span>
-                    <span className="text-yellow-600 font-bold">Building</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* AWS Services */}
-              <div className="bg-white p-6 rounded-lg shadow border">
-                <h3 className="text-xl font-semibold text-gray-800 mb-4">AWS Services</h3>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="p-4 border rounded">
-                    <h4 className="font-semibold text-gray-700">S3 Storage</h4>
-                    <p className="text-2xl font-bold text-burnt-orange">2.3 TB</p>
-                    <p className="text-sm text-gray-500">$89.50/month</p>
-                  </div>
-                  <div className="p-4 border rounded">
-                    <h4 className="font-semibold text-gray-700">SES Emails</h4>
-                    <p className="text-2xl font-bold text-burnt-orange">45.2K</p>
-                    <p className="text-sm text-gray-500">This month</p>
-                  </div>
-                  <div className="p-4 border rounded">
-                    <h4 className="font-semibold text-gray-700">API Calls</h4>
-                    <p className="text-2xl font-bold text-burnt-orange">1.2M</p>
-                    <p className="text-sm text-gray-500">This month</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Recent Activity */}
-              <div className="bg-white p-6 rounded-lg shadow border">
-                <h3 className="text-xl font-semibold text-gray-800 mb-4">Recent Activity</h3>
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded">
-                    <span className="text-sm">New user registration: john.doe@email.com</span>
-                    <span className="text-xs text-gray-500">2 min ago</span>
-                  </div>
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded">
-                    <span className="text-sm">License activated: Premium Software License</span>
-                    <span className="text-xs text-gray-500">5 min ago</span>
-                  </div>
-                  <div className="flex items-center justify-between p-3 bg-gray-50 rounded">
-                    <span className="text-sm">Payment processed: $299.99</span>
-                    <span className="text-xs text-gray-500">12 min ago</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
+          {activeSection === 'dashboard' && <Dashboard />}
           
-          {activeSection !== 'dashboard' && (
+          {activeSection === 'analytics' && <Analytics />}
+
+          {activeSection === 'users' && <Users />}
+
+          {activeSection === 'billing' && <Billing />}
+
+          {activeSection === 'escrow' && <Escrow />}
+
+          {activeSection === 'products' && <Products />}
+
+          {activeSection === 'licensing' && <Licensing />}
+
+          {activeSection === 'compliance' && <Compliance />}
+
+          {activeSection === 'email' && <Email />}
+
+          {activeSection === 'forms' && <Forms />}
+
+          {activeSection === 'social-mod' && <SocialModeration />}
+
+          {activeSection === 'ses' && <AWSSES />}
+
+          {activeSection === 's3' && <S3Storage />}
+
+          {activeSection === 'cms-admin' && <CMSAdmin />}
+
+          {activeSection === 'crm-admin' && <CRMAdmin />}
+
+          {activeSection === 'reports' && <ReportsBI />}
+
+          {activeSection === 'audit' && <AuditLogs />}
+
+          {activeSection === 'health' && <SystemHealth />}
+
+          {activeSection === 'notifications' && <Notifications />}
+
+          {activeSection === 'search' && <SearchIndex />}
+
+          {activeSection === 'audio' && <AudioProcessing />}
+
+          {activeSection === 'preview' && <LivePreview />}
+
+          {activeSection === 'integrations' && <Integrations />}
+
+          {activeSection !== 'dashboard' && activeSection !== 'analytics' && activeSection !== 'users' && activeSection !== 'billing' && activeSection !== 'escrow' && activeSection !== 'products' && activeSection !== 'licensing' && activeSection !== 'compliance' && activeSection !== 'email' && activeSection !== 'forms' && activeSection !== 'social-mod' && activeSection !== 'ses' && activeSection !== 's3' && activeSection !== 'cms-admin' && activeSection !== 'crm-admin' && activeSection !== 'reports' && activeSection !== 'audit' && activeSection !== 'health' && activeSection !== 'notifications' && activeSection !== 'search' && activeSection !== 'audio' && activeSection !== 'preview' && activeSection !== 'integrations' && (
             <div className="bg-white p-6 rounded-lg shadow border">
               <p className="text-gray-600">
                 {menuItems.find(item => item.id === activeSection)?.label} module coming soon...
