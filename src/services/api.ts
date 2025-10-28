@@ -893,6 +893,39 @@ class ApiClient {
       method: 'POST'
     })
   }
+
+  // API Management APIs
+  async getAPIs() {
+    return this.request('/admin/api-management/apis')
+  }
+
+  async getAPIKeys() {
+    return this.request('/admin/api-management/keys')
+  }
+
+  async generateAPIKey(apiId: string, keyData: any) {
+    return this.request('/admin/api-management/keys', {
+      method: 'POST',
+      body: JSON.stringify({ apiId, ...keyData })
+    })
+  }
+
+  async revokeAPIKey(keyId: string) {
+    return this.request(`/admin/api-management/keys/${keyId}/revoke`, {
+      method: 'POST'
+    })
+  }
+
+  async updateRateLimit(apiId: string, limits: any) {
+    return this.request(`/admin/api-management/apis/${apiId}/rate-limit`, {
+      method: 'PUT',
+      body: JSON.stringify(limits)
+    })
+  }
+
+  async getAPIAnalytics(apiId: string, timeframe: string) {
+    return this.request(`/admin/api-management/apis/${apiId}/analytics?timeframe=${timeframe}`)
+  }
 }
 
 export const apiClient = new ApiClient(API_BASE_URL)
