@@ -926,6 +926,140 @@ class ApiClient {
   async getAPIAnalytics(apiId: string, timeframe: string) {
     return this.request(`/admin/api-management/apis/${apiId}/analytics?timeframe=${timeframe}`)
   }
+
+  // Blog Admin APIs
+  async getBlogPosts() {
+    return this.request('/admin/blog/posts')
+  }
+
+  async getBlogCategories() {
+    return this.request('/admin/blog/categories')
+  }
+
+  async createBlogPost(postData: any) {
+    return this.request('/admin/blog/posts', {
+      method: 'POST',
+      body: JSON.stringify(postData)
+    })
+  }
+
+  async updateBlogPost(postId: string, postData: any) {
+    return this.request(`/admin/blog/posts/${postId}`, {
+      method: 'PUT',
+      body: JSON.stringify(postData)
+    })
+  }
+
+  async publishBlogPost(postId: string) {
+    return this.request(`/admin/blog/posts/${postId}/publish`, {
+      method: 'POST'
+    })
+  }
+
+  async unpublishBlogPost(postId: string) {
+    return this.request(`/admin/blog/posts/${postId}/unpublish`, {
+      method: 'POST'
+    })
+  }
+
+  async deleteBlogPost(postId: string) {
+    return this.request(`/admin/blog/posts/${postId}`, {
+      method: 'DELETE'
+    })
+  }
+
+  async getBlogAnalytics(timeframe: string) {
+    return this.request(`/admin/blog/analytics?timeframe=${timeframe}`)
+  }
+
+  // Messaging Admin APIs
+  async getConversations() {
+    return this.request('/admin/messaging/conversations')
+  }
+
+  async getChannels() {
+    return this.request('/admin/messaging/channels')
+  }
+
+  async getMessages(conversationId: string) {
+    return this.request(`/admin/messaging/conversations/${conversationId}/messages`)
+  }
+
+  async moderateMessage(messageId: string, action: string) {
+    return this.request(`/admin/messaging/messages/${messageId}/moderate`, {
+      method: 'POST',
+      body: JSON.stringify({ action })
+    })
+  }
+
+  async createChannel(channelData: any) {
+    return this.request('/admin/messaging/channels', {
+      method: 'POST',
+      body: JSON.stringify(channelData)
+    })
+  }
+
+  async getMessagingAnalytics(timeframe: string) {
+    return this.request(`/admin/messaging/analytics?timeframe=${timeframe}`)
+  }
+
+  // Business Profiles APIs
+  async getBusinessProfiles() {
+    return this.request('/admin/social/business-profiles')
+  }
+
+  async verifyBusinessProfile(profileId: string) {
+    return this.request(`/admin/social/business-profiles/${profileId}/verify`, {
+      method: 'POST'
+    })
+  }
+
+  async rejectBusinessProfile(profileId: string, reason: string) {
+    return this.request(`/admin/social/business-profiles/${profileId}/reject`, {
+      method: 'POST',
+      body: JSON.stringify({ reason })
+    })
+  }
+
+  async getJobPostings() {
+    return this.request('/admin/social/job-postings')
+  }
+
+  async moderateJobPosting(jobId: string, action: string) {
+    return this.request(`/admin/social/job-postings/${jobId}/moderate`, {
+      method: 'POST',
+      body: JSON.stringify({ action })
+    })
+  }
+
+  // Payment Processing APIs
+  async getPaymentTransactions() {
+    return this.request('/admin/payments/transactions')
+  }
+
+  async getPaymentWebhooks() {
+    return this.request('/admin/payments/webhooks')
+  }
+
+  async retryPayment(transactionId: string) {
+    return this.request(`/admin/payments/transactions/${transactionId}/retry`, {
+      method: 'POST'
+    })
+  }
+
+  async refundPayment(transactionId: string, amount: number) {
+    return this.request(`/admin/payments/transactions/${transactionId}/refund`, {
+      method: 'POST',
+      body: JSON.stringify({ amount })
+    })
+  }
+
+  async updatePaymentSettings(settings: any) {
+    return this.request('/admin/payments/settings', {
+      method: 'PUT',
+      body: JSON.stringify(settings)
+    })
+  }
 }
 
 export const apiClient = new ApiClient(API_BASE_URL)

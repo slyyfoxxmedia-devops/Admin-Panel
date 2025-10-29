@@ -23,6 +23,10 @@ import AudioProcessing from './components/AudioProcessing'
 import LivePreview from './components/LivePreview'
 import Integrations from './components/Integrations'
 import APIManagement from './components/APIManagement'
+import BlogAdmin from './components/BlogAdmin'
+import MessagingAdmin from './components/MessagingAdmin'
+import PaymentProcessing from './components/PaymentProcessing'
+import RoleManagement from './components/RoleManagement'
 
 const App = () => {
   const [activeSection, setActiveSection] = useState('dashboard')
@@ -31,7 +35,9 @@ const App = () => {
     { id: 'dashboard', label: 'Dashboard', icon: '📊' },
     { id: 'analytics', label: 'Analytics', icon: '📈' },
     { id: 'users', label: 'User Management', icon: '👥' },
+    { id: 'roles', label: 'Roles & Permissions', icon: '🔐' },
     { id: 'billing', label: 'Billing', icon: '💳' },
+    { id: 'payments', label: 'Payment Processing', icon: '💰' },
     { id: 'subscriptions', label: 'Subscriptions', icon: '🔄' },
     { id: 'escrow', label: 'Escrow', icon: '🏦' },
     { id: 'products', label: 'Products', icon: '📦' },
@@ -44,6 +50,8 @@ const App = () => {
     { id: 'social-mod', label: 'Social Moderation', icon: '🛡️' },
     { id: 'fantasy', label: 'Fantasy Sports', icon: '🏆' },
     { id: 'cms-admin', label: 'CMS Admin', icon: '📝' },
+    { id: 'blog-admin', label: 'Blog Admin', icon: '✍️' },
+    { id: 'messaging', label: 'Messaging', icon: '💬' },
     { id: 'crm-admin', label: 'CRM Admin', icon: '📞' },
     { id: 'api', label: 'API Management', icon: '🔌' },
     { id: 'reports', label: 'Reports & BI', icon: '📋' },
@@ -94,7 +102,11 @@ const App = () => {
 
           {activeSection === 'users' && <Users />}
 
+          {activeSection === 'roles' && <RoleManagement />}
+
           {activeSection === 'billing' && <Billing />}
+
+          {activeSection === 'payments' && <PaymentProcessing />}
 
           {activeSection === 'escrow' && <Escrow />}
 
@@ -116,6 +128,10 @@ const App = () => {
 
           {activeSection === 'cms-admin' && <CMSAdmin />}
 
+          {activeSection === 'blog-admin' && <BlogAdmin />}
+
+          {activeSection === 'messaging' && <MessagingAdmin />}
+
           {activeSection === 'crm-admin' && <CRMAdmin />}
 
           {activeSection === 'reports' && <ReportsBI />}
@@ -136,7 +152,7 @@ const App = () => {
 
           {activeSection === 'api' && <APIManagement />}
 
-          {activeSection !== 'dashboard' && activeSection !== 'analytics' && activeSection !== 'users' && activeSection !== 'billing' && activeSection !== 'escrow' && activeSection !== 'products' && activeSection !== 'licensing' && activeSection !== 'compliance' && activeSection !== 'email' && activeSection !== 'forms' && activeSection !== 'social-mod' && activeSection !== 'ses' && activeSection !== 's3' && activeSection !== 'cms-admin' && activeSection !== 'crm-admin' && activeSection !== 'reports' && activeSection !== 'audit' && activeSection !== 'health' && activeSection !== 'notifications' && activeSection !== 'search' && activeSection !== 'audio' && activeSection !== 'preview' && activeSection !== 'integrations' && activeSection !== 'api' && (
+          {activeSection !== 'dashboard' && activeSection !== 'analytics' && activeSection !== 'users' && activeSection !== 'roles' && activeSection !== 'billing' && activeSection !== 'payments' && activeSection !== 'escrow' && activeSection !== 'products' && activeSection !== 'licensing' && activeSection !== 'compliance' && activeSection !== 'email' && activeSection !== 'forms' && activeSection !== 'social-mod' && activeSection !== 'ses' && activeSection !== 's3' && activeSection !== 'cms-admin' && activeSection !== 'blog-admin' && activeSection !== 'messaging' && activeSection !== 'crm-admin' && activeSection !== 'reports' && activeSection !== 'audit' && activeSection !== 'health' && activeSection !== 'notifications' && activeSection !== 'search' && activeSection !== 'audio' && activeSection !== 'preview' && activeSection !== 'integrations' && activeSection !== 'api' && (
             <div className="bg-white p-6 rounded-lg shadow border">
               <p className="text-gray-600">
                 {menuItems.find(item => item.id === activeSection)?.label} module coming soon...

@@ -52,6 +52,8 @@ const SocialModeration = () => {
             { id: 'queue', label: 'Review Queue', icon: '📋' },
             { id: 'reports', label: 'User Reports', icon: '🚨' },
             { id: 'appeals', label: 'Appeals', icon: '⚖️' },
+            { id: 'business', label: 'Business Profiles', icon: '🏢' },
+            { id: 'jobs', label: 'Job Postings', icon: '💼' },
             { id: 'filters', label: 'Auto Filters', icon: '🤖' },
             { id: 'analytics', label: 'Analytics', icon: '📊' }
           ].map((tab) => (
@@ -220,6 +222,168 @@ const SocialModeration = () => {
                     <td className="px-6 py-4 text-sm space-x-2">
                       <button className="text-green-600 hover:text-green-800">Approve</button>
                       <button className="text-red-600 hover:text-red-800">Deny</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
+      {/* Business Profiles */}
+      {activeTab === 'business' && (
+        <div className="bg-white rounded-lg shadow border">
+          <div className="p-6 border-b border-gray-200">
+            <div className="flex justify-between items-center">
+              <h3 className="text-lg font-semibold">Business Profile Management</h3>
+              <div className="flex space-x-2">
+                <select className="border border-gray-300 rounded px-3 py-1 text-sm">
+                  <option>All Status</option>
+                  <option>Pending Verification</option>
+                  <option>Verified</option>
+                  <option>Rejected</option>
+                </select>
+                <select className="border border-gray-300 rounded px-3 py-1 text-sm">
+                  <option>All Industries</option>
+                  <option>Technology</option>
+                  <option>Healthcare</option>
+                  <option>Finance</option>
+                  <option>Marketing</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Company</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Industry</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Job Posts</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Created</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {[
+                  { id: 1, company: 'TechCorp Solutions', industry: 'Technology', status: 'Verified', jobPosts: 5, created: '2024-01-10', website: 'techcorp.com' },
+                  { id: 2, company: 'Digital Marketing Pro', industry: 'Marketing', status: 'Pending', jobPosts: 2, created: '2024-01-12', website: 'dmppro.com' },
+                  { id: 3, company: 'HealthTech Innovations', industry: 'Healthcare', status: 'Verified', jobPosts: 8, created: '2024-01-08', website: 'healthtech.io' },
+                  { id: 4, company: 'FinanceFlow LLC', industry: 'Finance', status: 'Rejected', jobPosts: 0, created: '2024-01-14', website: 'financeflow.net' }
+                ].map((business) => (
+                  <tr key={business.id}>
+                    <td className="px-6 py-4">
+                      <div>
+                        <div className="font-medium text-gray-900">{business.company}</div>
+                        <div className="text-sm text-gray-500">{business.website}</div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-900">{business.industry}</td>
+                    <td className="px-6 py-4">
+                      <span className={`px-2 py-1 text-xs rounded-full ${
+                        business.status === 'Verified' ? 'bg-green-100 text-green-800' :
+                        business.status === 'Pending' ? 'bg-yellow-100 text-yellow-800' :
+                        'bg-red-100 text-red-800'
+                      }`}>
+                        {business.status}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-900">{business.jobPosts}</td>
+                    <td className="px-6 py-4 text-sm text-gray-500">{business.created}</td>
+                    <td className="px-6 py-4 text-sm space-x-2">
+                      <button className="text-blue-600 hover:text-blue-800">Review</button>
+                      {business.status === 'Pending' && (
+                        <>
+                          <button className="text-green-600 hover:text-green-800">Verify</button>
+                          <button className="text-red-600 hover:text-red-800">Reject</button>
+                        </>
+                      )}
+                      <button className="text-gray-600 hover:text-gray-800">View Profile</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
+      {/* Job Postings */}
+      {activeTab === 'jobs' && (
+        <div className="bg-white rounded-lg shadow border">
+          <div className="p-6 border-b border-gray-200">
+            <div className="flex justify-between items-center">
+              <h3 className="text-lg font-semibold">Job Posting Management</h3>
+              <div className="flex space-x-2">
+                <select className="border border-gray-300 rounded px-3 py-1 text-sm">
+                  <option>All Status</option>
+                  <option>Active</option>
+                  <option>Paused</option>
+                  <option>Expired</option>
+                  <option>Flagged</option>
+                </select>
+                <select className="border border-gray-300 rounded px-3 py-1 text-sm">
+                  <option>All Types</option>
+                  <option>Full-time</option>
+                  <option>Part-time</option>
+                  <option>Contract</option>
+                  <option>Remote</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Job Title</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Company</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Type</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Salary</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Applications</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {[
+                  { id: 1, title: 'Senior React Developer', company: 'TechCorp Solutions', type: 'Full-time', salary: '$80k-$120k', applications: 23, status: 'Active', location: 'Remote' },
+                  { id: 2, title: 'Digital Marketing Manager', company: 'Digital Marketing Pro', type: 'Full-time', salary: '$60k-$80k', applications: 15, status: 'Active', location: 'New York' },
+                  { id: 3, title: 'UX/UI Designer', company: 'HealthTech Innovations', type: 'Contract', salary: '$50/hr', applications: 31, status: 'Paused', location: 'San Francisco' },
+                  { id: 4, title: 'Data Analyst', company: 'TechCorp Solutions', type: 'Part-time', salary: '$40k-$55k', applications: 8, status: 'Flagged', location: 'Chicago' }
+                ].map((job) => (
+                  <tr key={job.id}>
+                    <td className="px-6 py-4">
+                      <div>
+                        <div className="font-medium text-gray-900">{job.title}</div>
+                        <div className="text-sm text-gray-500">{job.location}</div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-900">{job.company}</td>
+                    <td className="px-6 py-4 text-sm text-gray-900">{job.type}</td>
+                    <td className="px-6 py-4 text-sm text-gray-900">{job.salary}</td>
+                    <td className="px-6 py-4 text-sm text-gray-900">{job.applications}</td>
+                    <td className="px-6 py-4">
+                      <span className={`px-2 py-1 text-xs rounded-full ${
+                        job.status === 'Active' ? 'bg-green-100 text-green-800' :
+                        job.status === 'Paused' ? 'bg-yellow-100 text-yellow-800' :
+                        job.status === 'Flagged' ? 'bg-red-100 text-red-800' :
+                        'bg-gray-100 text-gray-800'
+                      }`}>
+                        {job.status}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 text-sm space-x-2">
+                      <button className="text-blue-600 hover:text-blue-800">View</button>
+                      {job.status === 'Flagged' && (
+                        <>
+                          <button className="text-green-600 hover:text-green-800">Approve</button>
+                          <button className="text-red-600 hover:text-red-800">Remove</button>
+                        </>
+                      )}
+                      <button className="text-gray-600 hover:text-gray-800">Edit</button>
                     </td>
                   </tr>
                 ))}
