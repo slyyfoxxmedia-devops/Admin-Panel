@@ -27,6 +27,8 @@ import BlogAdmin from './components/BlogAdmin'
 import MessagingAdmin from './components/MessagingAdmin'
 import PaymentProcessing from './components/PaymentProcessing'
 import RoleManagement from './components/RoleManagement'
+import AlgorithmManagement from './components/AlgorithmManagement'
+import AutomationRules from './components/AutomationRules'
 
 const App = () => {
   const [activeSection, setActiveSection] = useState('dashboard')
@@ -36,6 +38,8 @@ const App = () => {
     { id: 'analytics', label: 'Analytics', icon: '📈' },
     { id: 'users', label: 'User Management', icon: '👥' },
     { id: 'roles', label: 'Roles & Permissions', icon: '🔐' },
+    { id: 'algorithms', label: 'Algorithm Management', icon: '🧠' },
+    { id: 'automation', label: 'Automation Rules', icon: '⚡' },
     { id: 'billing', label: 'Billing', icon: '💳' },
     { id: 'payments', label: 'Payment Processing', icon: '💰' },
     { id: 'subscriptions', label: 'Subscriptions', icon: '🔄' },
@@ -104,6 +108,10 @@ const App = () => {
 
           {activeSection === 'roles' && <RoleManagement />}
 
+          {activeSection === 'algorithms' && <AlgorithmManagement />}
+
+          {activeSection === 'automation' && <AutomationRules />}
+
           {activeSection === 'billing' && <Billing />}
 
           {activeSection === 'payments' && <PaymentProcessing />}
@@ -152,7 +160,7 @@ const App = () => {
 
           {activeSection === 'api' && <APIManagement />}
 
-          {activeSection !== 'dashboard' && activeSection !== 'analytics' && activeSection !== 'users' && activeSection !== 'roles' && activeSection !== 'billing' && activeSection !== 'payments' && activeSection !== 'escrow' && activeSection !== 'products' && activeSection !== 'licensing' && activeSection !== 'compliance' && activeSection !== 'email' && activeSection !== 'forms' && activeSection !== 'social-mod' && activeSection !== 'ses' && activeSection !== 's3' && activeSection !== 'cms-admin' && activeSection !== 'blog-admin' && activeSection !== 'messaging' && activeSection !== 'crm-admin' && activeSection !== 'reports' && activeSection !== 'audit' && activeSection !== 'health' && activeSection !== 'notifications' && activeSection !== 'search' && activeSection !== 'audio' && activeSection !== 'preview' && activeSection !== 'integrations' && activeSection !== 'api' && (
+          {activeSection !== 'dashboard' && activeSection !== 'analytics' && activeSection !== 'users' && activeSection !== 'roles' && activeSection !== 'algorithms' && activeSection !== 'automation' && activeSection !== 'billing' && activeSection !== 'payments' && activeSection !== 'escrow' && activeSection !== 'products' && activeSection !== 'licensing' && activeSection !== 'compliance' && activeSection !== 'email' && activeSection !== 'forms' && activeSection !== 'social-mod' && activeSection !== 'ses' && activeSection !== 's3' && activeSection !== 'cms-admin' && activeSection !== 'blog-admin' && activeSection !== 'messaging' && activeSection !== 'crm-admin' && activeSection !== 'reports' && activeSection !== 'audit' && activeSection !== 'health' && activeSection !== 'notifications' && activeSection !== 'search' && activeSection !== 'audio' && activeSection !== 'preview' && activeSection !== 'integrations' && activeSection !== 'api' && (
             <div className="bg-white p-6 rounded-lg shadow border">
               <p className="text-gray-600">
                 {menuItems.find(item => item.id === activeSection)?.label} module coming soon...
