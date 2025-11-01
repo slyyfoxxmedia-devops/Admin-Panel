@@ -30,6 +30,7 @@ import RoleManagement from './components/RoleManagement'
 import AlgorithmManagement from './components/AlgorithmManagement'
 import AutomationRules from './components/AutomationRules'
 import SocialNetwork from './components/SocialNetwork'
+import AWSAmplify from './components/AWSAmplify'
 
 const App = () => {
   const [activeSection, setActiveSection] = useState('dashboard')
@@ -40,7 +41,7 @@ const App = () => {
     { id: 'users', label: 'User Management', icon: '👥' },
     { id: 'roles', label: 'Roles & Permissions', icon: '🔐' },
     { id: 'algorithms', label: 'Algorithm Management', icon: '🧠' },
-    { id: 'automation', label: 'Automation Rules', icon: '⚡' },
+    { id: 'automation', label: 'Automation Rules', icon: '🔄' },
     { id: 'billing', label: 'Billing', icon: '💳' },
     { id: 'payments', label: 'Payment Processing', icon: '💰' },
     { id: 'subscriptions', label: 'Subscriptions', icon: '🔄' },
@@ -50,6 +51,7 @@ const App = () => {
     { id: 'compliance', label: 'Compliance', icon: '⚖️' },
     { id: 'email', label: 'Email', icon: '📧' },
     { id: 'forms', label: 'Forms', icon: '📝' },
+    { id: 'aws-amplify', label: 'AWS Amplify', icon: '☁️' },
     { id: 'ses', label: 'AWS SES', icon: '📮' },
     { id: 's3', label: 'S3 Storage', icon: '🗄️' },
     { id: 'social-mod', label: 'Social Moderation', icon: '🛡️' },
@@ -134,6 +136,8 @@ const App = () => {
 
           {activeSection === 'social-network' && <SocialNetwork />}
 
+          {activeSection === 'aws-amplify' && <AWSAmplify />}
+
           {activeSection === 'ses' && <AWSSES />}
 
           {activeSection === 's3' && <S3Storage />}
@@ -164,7 +168,7 @@ const App = () => {
 
           {activeSection === 'api' && <APIManagement />}
 
-          {activeSection !== 'dashboard' && activeSection !== 'analytics' && activeSection !== 'users' && activeSection !== 'roles' && activeSection !== 'algorithms' && activeSection !== 'automation' && activeSection !== 'billing' && activeSection !== 'payments' && activeSection !== 'escrow' && activeSection !== 'products' && activeSection !== 'licensing' && activeSection !== 'compliance' && activeSection !== 'email' && activeSection !== 'forms' && activeSection !== 'social-mod' && activeSection !== 'social-network' && activeSection !== 'ses' && activeSection !== 's3' && activeSection !== 'cms-admin' && activeSection !== 'blog-admin' && activeSection !== 'messaging' && activeSection !== 'crm-admin' && activeSection !== 'reports' && activeSection !== 'audit' && activeSection !== 'health' && activeSection !== 'notifications' && activeSection !== 'search' && activeSection !== 'audio' && activeSection !== 'preview' && activeSection !== 'integrations' && activeSection !== 'api' && (
+          {activeSection !== 'dashboard' && activeSection !== 'analytics' && activeSection !== 'users' && activeSection !== 'roles' && activeSection !== 'algorithms' && activeSection !== 'automation' && activeSection !== 'billing' && activeSection !== 'payments' && activeSection !== 'escrow' && activeSection !== 'products' && activeSection !== 'licensing' && activeSection !== 'compliance' && activeSection !== 'email' && activeSection !== 'forms' && activeSection !== 'social-mod' && activeSection !== 'social-network' && activeSection !== 'aws-amplify' && activeSection !== 'ses' && activeSection !== 's3' && activeSection !== 'cms-admin' && activeSection !== 'blog-admin' && activeSection !== 'messaging' && activeSection !== 'crm-admin' && activeSection !== 'reports' && activeSection !== 'audit' && activeSection !== 'health' && activeSection !== 'notifications' && activeSection !== 'search' && activeSection !== 'audio' && activeSection !== 'preview' && activeSection !== 'integrations' && activeSection !== 'api' && (
             <div className="bg-white p-6 rounded-lg shadow border">
               <p className="text-gray-600">
                 {menuItems.find(item => item.id === activeSection)?.label} module coming soon...
