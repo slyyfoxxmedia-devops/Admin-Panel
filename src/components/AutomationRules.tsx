@@ -19,7 +19,7 @@ const AutomationRules = () => {
               onClick={() => setActiveTab(tab.id)}
               className={`py-2 px-1 border-b-2 font-medium text-sm flex items-center space-x-2 ${
                 activeTab === tab.id
-                  ? 'border-burnt-orange text-burnt-orange'
+                  ? 'border-orange-600 text-orange-600'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
               }`}
             >
@@ -106,7 +106,7 @@ const AutomationRules = () => {
               </ul>
             </div>
 
-            <button className="bg-burnt-orange text-white px-4 py-2 rounded hover:bg-burnt-orange/90">
+            <button className="bg-orange-600 text-white px-4 py-2 rounded hover:bg-orange-700">
               Update Workflow Rules
             </button>
           </div>
@@ -169,10 +169,10 @@ const AutomationRules = () => {
             <div>
               <h4 className="font-medium mb-2">Condition-Based Triggers</h4>
               <ul className="text-sm space-y-1 text-gray-600">
-                <li>• System load > 80% → Scale up infrastructure</li>
-                <li>• Error rate > 5% → Alert development team</li>
-                <li>• Storage usage > 90% → Cleanup and archival</li>
-                <li>• User engagement < threshold → Re-engagement workflow</li>
+                <li>• System load &gt; 80% → Scale up infrastructure</li>
+                <li>• Error rate &gt; 5% → Alert development team</li>
+                <li>• Storage usage &gt; 90% → Cleanup and archival</li>
+                <li>• User engagement &lt; threshold → Re-engagement workflow</li>
                 <li>• Security threat detected → Incident response</li>
               </ul>
             </div>
@@ -189,7 +189,7 @@ const AutomationRules = () => {
               </ul>
             </div>
 
-            <button className="bg-burnt-orange text-white px-4 py-2 rounded hover:bg-burnt-orange/90">
+            <button className="bg-orange-600 text-white px-4 py-2 rounded hover:bg-orange-700">
               Update Trigger Rules
             </button>
           </div>
@@ -284,7 +284,7 @@ const AutomationRules = () => {
               </ul>
             </div>
 
-            <button className="bg-burnt-orange text-white px-4 py-2 rounded hover:bg-burnt-orange/90">
+            <button className="bg-orange-600 text-white px-4 py-2 rounded hover:bg-orange-700">
               Update Action Rules
             </button>
           </div>
@@ -387,7 +387,7 @@ const AutomationRules = () => {
               </ul>
             </div>
 
-            <button className="bg-burnt-orange text-white px-4 py-2 rounded hover:bg-burnt-orange/90">
+            <button className="bg-orange-600 text-white px-4 py-2 rounded hover:bg-orange-700">
               Update Execution Rules
             </button>
           </div>

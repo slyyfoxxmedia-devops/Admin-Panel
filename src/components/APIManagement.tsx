@@ -1,7 +1,19 @@
 import { useState } from 'react'
 
 const APIManagement = () => {
-  const [activeTab, setActiveTab] = useState('api-rules')
+  const [activeTab, setActiveTab] = useState('integrations')
+  const [showForm, setShowForm] = useState(null)
+  const [formData, setFormData] = useState({})
+
+  const handleInputChange = (field, value) => {
+    setFormData(prev => ({ ...prev, [field]: value }))
+  }
+
+  const handleSave = (apiName) => {
+    console.log(`Saving ${apiName} configuration:`, formData)
+    setShowForm(null)
+    setFormData({})
+  }
 
   return (
     <div className="space-y-6">
@@ -9,17 +21,17 @@ const APIManagement = () => {
       <div className="border-b border-gray-200">
         <nav className="-mb-px flex space-x-8">
           {[
-            { id: 'api-rules', label: 'API Rules', icon: '🔌' },
-            { id: 'authentication', label: 'Authentication Rules', icon: '🔐' },
-            { id: 'rate-limiting', label: 'Rate Limiting', icon: '⏱️' },
-            { id: 'versioning', label: 'Versioning Rules', icon: '📋' }
+            { id: 'integrations', label: 'API Integrations', icon: '🔌' },
+            { id: 'authentication', label: 'Authentication', icon: '🔐' },
+            { id: 'monitoring', label: 'Monitoring', icon: '📊' },
+            { id: 'documentation', label: 'Documentation', icon: '📚' }
           ].map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={`py-2 px-1 border-b-2 font-medium text-sm flex items-center space-x-2 ${
                 activeTab === tab.id
-                  ? 'border-burnt-orange text-burnt-orange'
+                  ? 'border-orange-600 text-orange-600'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
               }`}
             >
@@ -30,342 +42,442 @@ const APIManagement = () => {
         </nav>
       </div>
 
-      {/* API Rules */}
-      {activeTab === 'api-rules' && (
+      {/* API Integrations */}
+      {activeTab === 'integrations' && (
         <div className="bg-white rounded-lg shadow border p-6">
-          <h3 className="text-lg font-semibold mb-4">API Design and Standards</h3>
+          <h3 className="text-lg font-semibold mb-4">Third-Party API Integrations</h3>
           
           <div className="space-y-4">
-            <div>
-              <h4 className="font-medium mb-2">Ecosystem API Structure</h4>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="border rounded p-3">
-                  <h5 className="font-medium text-blue-800">Core APIs</h5>
-                  <ul className="text-sm text-gray-600 mt-1 space-y-1">
-                    <li>• Marketplace API (product management)</li>
-                    <li>• User Management API (authentication)</li>
-                    <li>• Payment Processing API (transactions)</li>
-                    <li>• Content Management API (CMS)</li>
-                  </ul>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="border rounded p-4">
+                <h4 className="font-medium text-blue-800 mb-2">Payment & Financial APIs</h4>
+                <ul className="text-sm text-gray-600 space-y-1">
+                  <li>• <strong>Stripe API</strong> - Payment processing & Connect</li>
+                  <li>• <strong>Stripe Webhooks</strong> - Real-time payment events</li>
+                  <li>• <strong>QuickBooks API</strong> - Accounting integration</li>
+                  <li>• <strong>QuickBooks Payments</strong> - Additional payment options</li>
+                </ul>
+              </div>
+              
+              <div className="border rounded p-4">
+                <h4 className="font-medium text-green-800 mb-2">Sports & Data APIs</h4>
+                <ul className="text-sm text-gray-600 space-y-1">
+                  <li>• <strong>Yahoo Fantasy Sports API</strong> - League management</li>
+                  <li>• <strong>Yahoo Sports API</strong> - Live scores & stats</li>
+                  <li>• <strong>ESPN API</strong> - Additional sports data</li>
+                  <li>• <strong>Sports data feeds</strong> - Real-time updates</li>
+                </ul>
+              </div>
+              
+              <div className="border rounded p-4">
+                <h4 className="font-medium text-purple-800 mb-2">AWS Services</h4>
+                <ul className="text-sm text-gray-600 space-y-1">
+                  <li>• <strong>AWS SES</strong> - Email delivery service</li>
+                  <li>• <strong>AWS S3</strong> - File storage and CDN</li>
+                  <li>• <strong>AWS Lambda</strong> - Serverless functions</li>
+                  <li>• <strong>AWS AppSync</strong> - GraphQL API</li>
+                </ul>
+              </div>
+              
+              <div className="border rounded p-4">
+                <h4 className="font-medium text-orange-800 mb-2">Future Integrations</h4>
+                <ul className="text-sm text-gray-600 space-y-1">
+                  <li>• <strong>Social Media APIs</strong> - Twitter, Facebook</li>
+                  <li>• <strong>Analytics APIs</strong> - Google Analytics</li>
+                  <li>• <strong>Communication APIs</strong> - Twilio, SendGrid</li>
+                  <li>• <strong>Additional Payment Providers</strong></li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="mt-6">
+              <h4 className="font-medium mb-2">API Configuration Status</h4>
+              <div className="space-y-2">
+                <div className="flex items-center justify-between p-3 border rounded">
+                  <div>
+                    <span className="font-medium">Stripe API</span>
+                    <p className="text-sm text-gray-500">Payment processing</p>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <span className="px-2 py-1 bg-green-100 text-green-800 rounded text-sm">Configured</span>
+                    <button 
+                      onClick={() => setShowForm('stripe')}
+                      className="text-blue-600 hover:text-blue-800 text-sm"
+                    >
+                      Edit
+                    </button>
+                  </div>
                 </div>
-                <div className="border rounded p-3">
-                  <h5 className="font-medium text-green-800">Platform APIs</h5>
-                  <ul className="text-sm text-gray-600 mt-1 space-y-1">
-                    <li>• Social Platform API (community)</li>
-                    <li>• Seller Dashboard API (analytics)</li>
-                    <li>• PM Dashboard API (project management)</li>
-                    <li>• Fantasy Sports API (gaming)</li>
-                  </ul>
+                <div className="flex items-center justify-between p-3 border rounded">
+                  <div>
+                    <span className="font-medium">Yahoo Fantasy API</span>
+                    <p className="text-sm text-gray-500">Fantasy sports data</p>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <span className="px-2 py-1 bg-yellow-100 text-yellow-800 rounded text-sm">Pending</span>
+                    <button 
+                      onClick={() => setShowForm('yahoo')}
+                      className="text-blue-600 hover:text-blue-800 text-sm"
+                    >
+                      Configure
+                    </button>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between p-3 border rounded">
+                  <div>
+                    <span className="font-medium">QuickBooks API</span>
+                    <p className="text-sm text-gray-500">Accounting integration</p>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <span className="px-2 py-1 bg-yellow-100 text-yellow-800 rounded text-sm">Pending</span>
+                    <button 
+                      onClick={() => setShowForm('quickbooks')}
+                      className="text-blue-600 hover:text-blue-800 text-sm"
+                    >
+                      Configure
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div>
-              <h4 className="font-medium mb-2">API Design Standards</h4>
-              <ul className="text-sm space-y-1 text-gray-600">
-                <li>• RESTful architecture with standard HTTP methods</li>
-                <li>• JSON request/response format exclusively</li>
-                <li>• Consistent URL structure: /api/v{version}/{resource}</li>
-                <li>• Proper HTTP status codes (200, 201, 400, 401, 404, 500)</li>
-                <li>• Standardized error response format</li>
-                <li>• HTTPS required for all API endpoints</li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="font-medium mb-2">Response Format Standards</h4>
-              <div className="border rounded p-3 bg-gray-50">
-                <h5 className="font-medium mb-2">Success Response</h5>
-                <pre className="text-xs text-gray-700">
-{`{
-  "success": true,
-  "data": { ... },
-  "meta": {
-    "timestamp": "2024-01-15T10:30:00Z",
-    "version": "v1.2"
-  }
-}`}
-                </pre>
+            {/* Configuration Forms */}
+            {showForm === 'stripe' && (
+              <div className="mt-6 p-4 border rounded bg-gray-50">
+                <h4 className="font-medium mb-4">Configure Stripe API</h4>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Publishable Key
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="pk_test_..."
+                      className="w-full p-2 border rounded"
+                      onChange={(e) => handleInputChange('stripePublishableKey', e.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Secret Key
+                    </label>
+                    <input
+                      type="password"
+                      placeholder="sk_test_..."
+                      className="w-full p-2 border rounded"
+                      onChange={(e) => handleInputChange('stripeSecretKey', e.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Webhook Secret
+                    </label>
+                    <input
+                      type="password"
+                      placeholder="whsec_..."
+                      className="w-full p-2 border rounded"
+                      onChange={(e) => handleInputChange('stripeWebhookSecret', e.target.value)}
+                    />
+                  </div>
+                  <div className="flex space-x-2">
+                    <button 
+                      onClick={() => handleSave('Stripe')}
+                      className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+                    >
+                      Save Configuration
+                    </button>
+                    <button 
+                      onClick={() => setShowForm(null)}
+                      className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
               </div>
-              <div className="border rounded p-3 bg-gray-50 mt-2">
-                <h5 className="font-medium mb-2">Error Response</h5>
-                <pre className="text-xs text-gray-700">
-{`{
-  "success": false,
-  "error": {
-    "code": "VALIDATION_ERROR",
-    "message": "Invalid input data",
-    "details": { ... }
-  }
-}`}
-                </pre>
+            )}
+
+            {showForm === 'yahoo' && (
+              <div className="mt-6 p-4 border rounded bg-gray-50">
+                <h4 className="font-medium mb-4">Configure Yahoo Fantasy API</h4>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Client ID
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Your Yahoo Client ID"
+                      className="w-full p-2 border rounded"
+                      onChange={(e) => handleInputChange('yahooClientId', e.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Client Secret
+                    </label>
+                    <input
+                      type="password"
+                      placeholder="Your Yahoo Client Secret"
+                      className="w-full p-2 border rounded"
+                      onChange={(e) => handleInputChange('yahooClientSecret', e.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Redirect URI
+                    </label>
+                    <input
+                      type="url"
+                      placeholder="https://yourdomain.com/auth/yahoo/callback"
+                      className="w-full p-2 border rounded"
+                      onChange={(e) => handleInputChange('yahooRedirectUri', e.target.value)}
+                    />
+                  </div>
+                  <div className="flex space-x-2">
+                    <button 
+                      onClick={() => handleSave('Yahoo Fantasy')}
+                      className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+                    >
+                      Save Configuration
+                    </button>
+                    <button 
+                      onClick={() => setShowForm(null)}
+                      className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
               </div>
-            </div>
+            )}
 
-            <div>
-              <h4 className="font-medium mb-2">Documentation Requirements</h4>
-              <ul className="text-sm space-y-1 text-gray-600">
-                <li>• OpenAPI 3.0 specification for all endpoints</li>
-                <li>• Interactive documentation with examples</li>
-                <li>• SDK generation for major languages</li>
-                <li>• Postman collections for testing</li>
-                <li>• Changelog for API updates</li>
-              </ul>
-            </div>
-
-            <button className="bg-burnt-orange text-white px-4 py-2 rounded hover:bg-burnt-orange/90">
-              Update API Rules
-            </button>
+            {showForm === 'quickbooks' && (
+              <div className="mt-6 p-4 border rounded bg-gray-50">
+                <h4 className="font-medium mb-4">Configure QuickBooks API</h4>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      App Key
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Your QuickBooks App Key"
+                      className="w-full p-2 border rounded"
+                      onChange={(e) => handleInputChange('quickbooksAppKey', e.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      App Secret
+                    </label>
+                    <input
+                      type="password"
+                      placeholder="Your QuickBooks App Secret"
+                      className="w-full p-2 border rounded"
+                      onChange={(e) => handleInputChange('quickbooksAppSecret', e.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Environment
+                    </label>
+                    <select 
+                      className="w-full p-2 border rounded"
+                      onChange={(e) => handleInputChange('quickbooksEnvironment', e.target.value)}
+                    >
+                      <option value="">Select Environment</option>
+                      <option value="sandbox">Sandbox</option>
+                      <option value="production">Production</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Redirect URI
+                    </label>
+                    <input
+                      type="url"
+                      placeholder="https://yourdomain.com/auth/quickbooks/callback"
+                      className="w-full p-2 border rounded"
+                      onChange={(e) => handleInputChange('quickbooksRedirectUri', e.target.value)}
+                    />
+                  </div>
+                  <div className="flex space-x-2">
+                    <button 
+                      onClick={() => handleSave('QuickBooks')}
+                      className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+                    >
+                      Save Configuration
+                    </button>
+                    <button 
+                      onClick={() => setShowForm(null)}
+                      className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}
 
-      {/* Authentication Rules */}
+      {/* Authentication */}
       {activeTab === 'authentication' && (
         <div className="bg-white rounded-lg shadow border p-6">
-          <h3 className="text-lg font-semibold mb-4">API Authentication Configuration</h3>
+          <h3 className="text-lg font-semibold mb-4">API Authentication</h3>
           
           <div className="space-y-4">
             <div>
               <h4 className="font-medium mb-2">Authentication Methods</h4>
-              <div className="space-y-2">
+              <div className="grid grid-cols-2 gap-4">
                 <div className="border rounded p-3">
-                  <h5 className="font-medium text-blue-800">API Keys (Primary)</h5>
-                  <ul className="text-sm text-gray-600 mt-1 space-y-1">
-                    <li>• Header-based authentication: X-API-Key</li>
-                    <li>• 32-character alphanumeric keys</li>
-                    <li>• Environment-specific keys (dev/staging/prod)</li>
-                    <li>• Automatic key rotation every 90 days</li>
-                  </ul>
+                  <h5 className="font-medium text-blue-800">API Keys</h5>
+                  <p className="text-sm text-gray-600 mt-1">Secure API key authentication for external services</p>
                 </div>
                 <div className="border rounded p-3">
-                  <h5 className="font-medium text-green-800">OAuth 2.0 (Advanced)</h5>
-                  <ul className="text-sm text-gray-600 mt-1 space-y-1">
-                    <li>• Authorization code flow for web applications</li>
-                    <li>• Client credentials flow for server-to-server</li>
-                    <li>• JWT tokens with 1-hour expiration</li>
-                    <li>• Refresh token mechanism</li>
-                  </ul>
-                </div>
-                <div className="border rounded p-3">
-                  <h5 className="font-medium text-purple-800">Session-based (Internal)</h5>
-                  <ul className="text-sm text-gray-600 mt-1 space-y-1">
-                    <li>• Cookie-based authentication for web apps</li>
-                    <li>• CSRF protection required</li>
-                    <li>• Session timeout: 24 hours</li>
-                    <li>• Secure and HttpOnly flags</li>
-                  </ul>
+                  <h5 className="font-medium text-green-800">OAuth 2.0</h5>
+                  <p className="text-sm text-gray-600 mt-1">OAuth authentication for user-authorized access</p>
                 </div>
               </div>
             </div>
 
             <div>
-              <h4 className="font-medium mb-2">Permission Levels</h4>
-              <div className="grid grid-cols-3 gap-4">
-                <div className="border rounded p-3">
-                  <h5 className="font-medium text-green-800">Read Only</h5>
-                  <ul className="text-sm text-gray-600 mt-1 space-y-1">
-                    <li>• GET requests only</li>
-                    <li>• Public data access</li>
-                    <li>• No sensitive information</li>
-                  </ul>
+              <h4 className="font-medium mb-2">API Key Management</h4>
+              <div className="space-y-4">
+                <div className="p-4 border rounded">
+                  <h5 className="font-medium mb-2">Generate New API Key</h5>
+                  <div className="flex space-x-2">
+                    <input
+                      type="text"
+                      placeholder="API Key Name"
+                      className="flex-1 p-2 border rounded"
+                    />
+                    <select className="p-2 border rounded">
+                      <option>Read Only</option>
+                      <option>Read & Write</option>
+                      <option>Admin Access</option>
+                    </select>
+                    <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                      Generate
+                    </button>
+                  </div>
                 </div>
-                <div className="border rounded p-3">
-                  <h5 className="font-medium text-blue-800">Read & Write</h5>
-                  <ul className="text-sm text-gray-600 mt-1 space-y-1">
-                    <li>• GET, POST, PUT requests</li>
-                    <li>• User-owned data access</li>
-                    <li>• Standard operations</li>
-                  </ul>
-                </div>
-                <div className="border rounded p-3">
-                  <h5 className="font-medium text-red-800">Admin Access</h5>
-                  <ul className="text-sm text-gray-600 mt-1 space-y-1">
-                    <li>• All HTTP methods</li>
-                    <li>• System-level operations</li>
-                    <li>• Sensitive data access</li>
-                  </ul>
+                
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between p-3 border rounded">
+                    <div>
+                      <span className="font-medium">Admin Panel API Key</span>
+                      <p className="text-sm text-gray-500">ap_***************</p>
+                    </div>
+                    <div className="flex space-x-2">
+                      <button className="text-blue-600 hover:text-blue-800 text-sm">Copy</button>
+                      <button className="text-red-600 hover:text-red-800 text-sm">Revoke</button>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between p-3 border rounded">
+                    <div>
+                      <span className="font-medium">Mobile App API Key</span>
+                      <p className="text-sm text-gray-500">ma_***************</p>
+                    </div>
+                    <div className="flex space-x-2">
+                      <button className="text-blue-600 hover:text-blue-800 text-sm">Copy</button>
+                      <button className="text-red-600 hover:text-red-800 text-sm">Revoke</button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div>
-              <h4 className="font-medium mb-2">Security Requirements</h4>
-              <ul className="text-sm space-y-1 text-gray-600">
-                <li>• All API keys encrypted at rest</li>
-                <li>• Request signing for sensitive operations</li>
-                <li>• IP whitelisting for admin-level access</li>
-                <li>• Audit logging for all authenticated requests</li>
-                <li>• Automatic key revocation on suspicious activity</li>
-              </ul>
-            </div>
-
-            <button className="bg-burnt-orange text-white px-4 py-2 rounded hover:bg-burnt-orange/90">
-              Update Authentication Rules
+            <button className="bg-orange-600 text-white px-4 py-2 rounded hover:bg-orange-700">
+              Update Authentication
             </button>
           </div>
         </div>
       )}
 
-      {/* Rate Limiting */}
-      {activeTab === 'rate-limiting' && (
+      {/* Monitoring */}
+      {activeTab === 'monitoring' && (
         <div className="bg-white rounded-lg shadow border p-6">
-          <h3 className="text-lg font-semibold mb-4">Rate Limiting Configuration</h3>
+          <h3 className="text-lg font-semibold mb-4">API Monitoring</h3>
           
           <div className="space-y-4">
+            <div className="grid grid-cols-3 gap-4">
+              <div className="border rounded p-4 text-center">
+                <div className="text-2xl font-bold text-green-600">99.9%</div>
+                <div className="text-sm text-gray-600">Uptime</div>
+              </div>
+              <div className="border rounded p-4 text-center">
+                <div className="text-2xl font-bold text-blue-600">1,234</div>
+                <div className="text-sm text-gray-600">API Calls Today</div>
+              </div>
+              <div className="border rounded p-4 text-center">
+                <div className="text-2xl font-bold text-orange-600">45ms</div>
+                <div className="text-sm text-gray-600">Avg Response Time</div>
+              </div>
+            </div>
+
             <div>
-              <h4 className="font-medium mb-2">Rate Limit Tiers</h4>
+              <h4 className="font-medium mb-2">Recent API Activity</h4>
               <div className="space-y-2">
-                <div className="border rounded p-3">
-                  <div className="flex justify-between items-center mb-2">
-                    <h5 className="font-medium text-gray-800">Free Tier</h5>
-                    <span className="text-sm bg-gray-100 text-gray-800 px-2 py-1 rounded">Default</span>
-                  </div>
-                  <ul className="text-sm text-gray-600 space-y-1">
-                    <li>• 1,000 requests per hour</li>
-                    <li>• 100 requests per minute (burst)</li>
-                    <li>• Read-only access primarily</li>
-                  </ul>
+                <div className="flex items-center justify-between p-3 border rounded">
+                  <span>Stripe Payment API</span>
+                  <span className="text-green-600">✓ Success</span>
                 </div>
-                <div className="border rounded p-3">
-                  <div className="flex justify-between items-center mb-2">
-                    <h5 className="font-medium text-blue-800">Premium Tier</h5>
-                    <span className="text-sm bg-blue-100 text-blue-800 px-2 py-1 rounded">Paid</span>
-                  </div>
-                  <ul className="text-sm text-gray-600 space-y-1">
-                    <li>• 10,000 requests per hour</li>
-                    <li>• 500 requests per minute (burst)</li>
-                    <li>• Full read/write access</li>
-                  </ul>
+                <div className="flex items-center justify-between p-3 border rounded">
+                  <span>AWS S3 Upload</span>
+                  <span className="text-green-600">✓ Success</span>
                 </div>
-                <div className="border rounded p-3">
-                  <div className="flex justify-between items-center mb-2">
-                    <h5 className="font-medium text-purple-800">Enterprise Tier</h5>
-                    <span className="text-sm bg-purple-100 text-purple-800 px-2 py-1 rounded">Custom</span>
-                  </div>
-                  <ul className="text-sm text-gray-600 space-y-1">
-                    <li>• 100,000 requests per hour</li>
-                    <li>• 2,000 requests per minute (burst)</li>
-                    <li>• Priority support and SLA</li>
-                  </ul>
+                <div className="flex items-center justify-between p-3 border rounded">
+                  <span>Yahoo Sports API</span>
+                  <span className="text-red-600">✗ Error</span>
                 </div>
               </div>
             </div>
 
-            <div>
-              <h4 className="font-medium mb-2">Rate Limiting Strategy</h4>
-              <ul className="text-sm space-y-1 text-gray-600">
-                <li>• Token bucket algorithm for smooth rate limiting</li>
-                <li>• Per-API-key tracking with Redis backend</li>
-                <li>• Sliding window for burst detection</li>
-                <li>• Graceful degradation with 429 status codes</li>
-                <li>• Rate limit headers in all responses</li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="font-medium mb-2">Rate Limit Headers</h4>
-              <div className="border rounded p-3 bg-gray-50">
-                <pre className="text-xs text-gray-700">
-{`X-RateLimit-Limit: 1000
-X-RateLimit-Remaining: 999
-X-RateLimit-Reset: 1642248000
-X-RateLimit-Retry-After: 3600`}
-                </pre>
-              </div>
-            </div>
-
-            <div>
-              <h4 className="font-medium mb-2">Throttling Rules</h4>
-              <ul className="text-sm space-y-1 text-gray-600">
-                <li>• Exponential backoff for repeated violations</li>
-                <li>• Temporary IP blocking for abuse (1-24 hours)</li>
-                <li>• Whitelist for trusted internal services</li>
-                <li>• Dynamic rate adjustment based on system load</li>
-                <li>• Alert notifications for unusual traffic patterns</li>
-              </ul>
-            </div>
-
-            <button className="bg-burnt-orange text-white px-4 py-2 rounded hover:bg-burnt-orange/90">
-              Update Rate Limiting Rules
+            <button className="bg-orange-600 text-white px-4 py-2 rounded hover:bg-orange-700">
+              View Detailed Logs
             </button>
           </div>
         </div>
       )}
 
-      {/* Versioning Rules */}
-      {activeTab === 'versioning' && (
+      {/* Documentation */}
+      {activeTab === 'documentation' && (
         <div className="bg-white rounded-lg shadow border p-6">
-          <h3 className="text-lg font-semibold mb-4">API Versioning Rules</h3>
+          <h3 className="text-lg font-semibold mb-4">API Documentation</h3>
           
           <div className="space-y-4">
             <div>
-              <h4 className="font-medium mb-2">Versioning Strategy</h4>
-              <ul className="text-sm space-y-1 text-gray-600">
-                <li>• Semantic versioning (major.minor.patch)</li>
-                <li>• URL-based versioning: /api/v1/, /api/v2/</li>
-                <li>• Backward compatibility for minor versions</li>
-                <li>• Breaking changes only in major versions</li>
-                <li>• Minimum 12-month support for deprecated versions</li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="font-medium mb-2">Version Lifecycle</h4>
+              <h4 className="font-medium mb-2">Available Documentation</h4>
               <div className="space-y-2">
-                <div className="border rounded p-3">
-                  <h5 className="font-medium text-green-800">Active Versions</h5>
-                  <ul className="text-sm text-gray-600 mt-1 space-y-1">
-                    <li>• v1.2 - Current stable version</li>
-                    <li>• v1.1 - Previous stable (maintenance mode)</li>
-                    <li>• v2.0 - Beta version (testing)</li>
-                  </ul>
+                <div className="flex items-center justify-between p-3 border rounded">
+                  <div>
+                    <span className="font-medium">Stripe Integration Guide</span>
+                    <p className="text-sm text-gray-500">Payment processing and Connect setup</p>
+                  </div>
+                  <button className="text-blue-600 hover:text-blue-800">View</button>
                 </div>
-                <div className="border rounded p-3">
-                  <h5 className="font-medium text-orange-800">Deprecated Versions</h5>
-                  <ul className="text-sm text-gray-600 mt-1 space-y-1">
-                    <li>• v1.0 - Deprecated (EOL: June 2024)</li>
-                    <li>• v0.9 - Legacy (EOL: March 2024)</li>
-                  </ul>
+                <div className="flex items-center justify-between p-3 border rounded">
+                  <div>
+                    <span className="font-medium">Yahoo Fantasy API Guide</span>
+                    <p className="text-sm text-gray-500">Fantasy sports league integration</p>
+                  </div>
+                  <button className="text-blue-600 hover:text-blue-800">View</button>
+                </div>
+                <div className="flex items-center justify-between p-3 border rounded">
+                  <div>
+                    <span className="font-medium">QuickBooks API Guide</span>
+                    <p className="text-sm text-gray-500">Accounting system integration</p>
+                  </div>
+                  <button className="text-blue-600 hover:text-blue-800">View</button>
                 </div>
               </div>
             </div>
 
-            <div>
-              <h4 className="font-medium mb-2">Breaking Change Rules</h4>
-              <ul className="text-sm space-y-1 text-gray-600">
-                <li>• Removing endpoints or fields</li>
-                <li>• Changing response data types</li>
-                <li>• Modifying authentication requirements</li>
-                <li>• Altering error response formats</li>
-                <li>• Changing rate limiting policies</li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="font-medium mb-2">Migration Support</h4>
-              <ul className="text-sm space-y-1 text-gray-600">
-                <li>• 6-month advance notice for deprecations</li>
-                <li>• Migration guides and code examples</li>
-                <li>• Automated migration tools where possible</li>
-                <li>• Developer support during transition</li>
-                <li>• Gradual rollout of new versions</li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="font-medium mb-2">Version Detection</h4>
-              <ul className="text-sm space-y-1 text-gray-600">
-                <li>• URL path versioning (preferred): /api/v1/</li>
-                <li>• Header versioning (alternative): API-Version: v1</li>
-                <li>• Default to latest stable if not specified</li>
-                <li>• Version information in response headers</li>
-                <li>• Client SDK automatic version handling</li>
-              </ul>
-            </div>
-
-            <button className="bg-burnt-orange text-white px-4 py-2 rounded hover:bg-burnt-orange/90">
-              Update Versioning Rules
+            <button className="bg-orange-600 text-white px-4 py-2 rounded hover:bg-orange-700">
+              Generate API Documentation
             </button>
           </div>
         </div>
