@@ -1,279 +1,341 @@
 import { useState } from 'react'
 
-interface Connection {
-  id: string
-  follower: string
-  following: string
-  followedAt: string
-  status: 'active' | 'blocked' | 'muted'
-  mutualFollows: boolean
-}
-
-interface NetworkStats {
-  totalConnections: number
-  activeConnections: number
-  mutualConnections: number
-  averageFollowers: number
-  topInfluencers: Array<{
-    username: string
-    followers: number
-    following: number
-  }>
-}
-
 const SocialNetwork = () => {
-  const [activeTab, setActiveTab] = useState<'overview' | 'connections' | 'analytics'>('overview')
-  
-  const [networkStats] = useState<NetworkStats>({
-    totalConnections: 45672,
-    activeConnections: 43891,
-    mutualConnections: 12456,
-    averageFollowers: 127,
-    topInfluencers: [
-      { username: '@sportsfan_mike', followers: 15420, following: 892 },
-      { username: '@fantasy_guru', followers: 12890, following: 456 },
-      { username: '@social_butterfly', followers: 9876, following: 2341 },
-      { username: '@content_creator', followers: 8765, following: 234 },
-      { username: '@sports_analyst', followers: 7654, following: 567 }
-    ]
-  })
-
-  const [connections] = useState<Connection[]>([
-    {
-      id: '1',
-      follower: '@john_doe',
-      following: '@sports_fan',
-      followedAt: '2024-01-15 10:30',
-      status: 'active',
-      mutualFollows: true
-    },
-    {
-      id: '2',
-      follower: '@jane_smith',
-      following: '@fantasy_expert',
-      followedAt: '2024-01-15 09:15',
-      status: 'active',
-      mutualFollows: false
-    },
-    {
-      id: '3',
-      follower: '@mike_wilson',
-      following: '@content_king',
-      followedAt: '2024-01-14 16:45',
-      status: 'blocked',
-      mutualFollows: false
-    },
-    {
-      id: '4',
-      follower: '@sarah_jones',
-      following: '@social_star',
-      followedAt: '2024-01-14 14:20',
-      status: 'muted',
-      mutualFollows: true
-    },
-    {
-      id: '5',
-      follower: '@alex_brown',
-      following: '@sports_guru',
-      followedAt: '2024-01-13 11:10',
-      status: 'active',
-      mutualFollows: false
-    }
-  ])
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'active': return 'bg-green-100 text-green-800'
-      case 'blocked': return 'bg-red-100 text-red-800'
-      case 'muted': return 'bg-yellow-100 text-yellow-800'
-      default: return 'bg-gray-100 text-gray-800'
-    }
-  }
+  const [activeTab, setActiveTab] = useState('network-rules')
 
   return (
     <div className="space-y-6">
-      {/* Tabs */}
-      <div className="flex space-x-1 bg-gray-100 p-1 rounded-lg">
-        {(['overview', 'connections', 'analytics'] as const).map((tab) => (
-          <button
-            key={tab}
-            onClick={() => setActiveTab(tab)}
-            className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
-              activeTab === tab
-                ? 'bg-blue-500 text-white'
-                : 'text-gray-600 hover:text-gray-800'
-            }`}
-          >
-            {tab.charAt(0).toUpperCase() + tab.slice(1)}
-          </button>
-        ))}
+      {/* Tab Navigation */}
+      <div className="border-b border-gray-200">
+        <nav className="-mb-px flex space-x-8">
+          {[
+            { id: 'network-rules', label: 'Network Rules', icon: '🔗' },
+            { id: 'connection-rules', label: 'Connection Rules', icon: '🤝' },
+            { id: 'privacy-rules', label: 'Privacy Rules', icon: '🔒' },
+            { id: 'engagement-rules', label: 'Engagement Rules', icon: '💬' }
+          ].map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`py-2 px-1 border-b-2 font-medium text-sm flex items-center space-x-2 ${
+                activeTab === tab.id
+                  ? 'border-burnt-orange text-burnt-orange'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              <span>{tab.icon}</span>
+              <span>{tab.label}</span>
+            </button>
+          ))}
+        </nav>
       </div>
 
-      {/* Overview Tab */}
-      {activeTab === 'overview' && (
-        <div className="space-y-6">
-          {/* Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div className="bg-white p-4 rounded-lg shadow border">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-gray-600">Total Connections</p>
-                  <p className="text-2xl font-semibold">{networkStats.totalConnections.toLocaleString()}</p>
-                </div>
-                <span className="text-3xl">🔗</span>
-              </div>
-            </div>
-            
-            <div className="bg-white p-4 rounded-lg shadow border">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-gray-600">Active</p>
-                  <p className="text-2xl font-semibold text-green-600">{networkStats.activeConnections.toLocaleString()}</p>
-                </div>
-                <span className="text-3xl">✅</span>
-              </div>
-            </div>
-            
-            <div className="bg-white p-4 rounded-lg shadow border">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-gray-600">Mutual Follows</p>
-                  <p className="text-2xl font-semibold text-blue-600">{networkStats.mutualConnections.toLocaleString()}</p>
-                </div>
-                <span className="text-3xl">🤝</span>
-              </div>
-            </div>
-            
-            <div className="bg-white p-4 rounded-lg shadow border">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-gray-600">Avg Followers</p>
-                  <p className="text-2xl font-semibold text-purple-600">{networkStats.averageFollowers}</p>
-                </div>
-                <span className="text-3xl">📊</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Top Influencers */}
-          <div className="bg-white rounded-lg shadow border">
-            <div className="p-4 border-b">
-              <h3 className="text-lg font-semibold">Top Influencers</h3>
-              <p className="text-sm text-gray-600 mt-1">Users with the most followers</p>
-            </div>
-            <div className="divide-y">
-              {networkStats.topInfluencers.map((influencer, index) => (
-                <div key={influencer.username} className="p-4 flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-semibold">
-                      {index + 1}
-                    </div>
-                    <div>
-                      <h4 className="font-medium">{influencer.username}</h4>
-                      <p className="text-sm text-gray-600">{influencer.followers.toLocaleString()} followers</p>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-sm font-medium">{influencer.following.toLocaleString()}</p>
-                    <p className="text-xs text-gray-500">Following</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Connections Tab */}
-      {activeTab === 'connections' && (
-        <div className="bg-white rounded-lg shadow border">
-          <div className="p-4 border-b flex justify-between items-center">
+      {/* Network Rules */}
+      {activeTab === 'network-rules' && (
+        <div className="bg-white rounded-lg shadow border p-6">
+          <h3 className="text-lg font-semibold mb-4">Social Network Configuration</h3>
+          
+          <div className="space-y-4">
             <div>
-              <h3 className="text-lg font-semibold">Recent Connections</h3>
-              <p className="text-sm text-gray-600 mt-1">Manage follow relationships</p>
+              <h4 className="font-medium mb-2">Network Structure Rules</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Directed graph model: Users can follow others without reciprocation</li>
+                <li>• Maximum following limit: 5,000 accounts per user</li>
+                <li>• Maximum followers: No limit (organic growth)</li>
+                <li>• Connection verification: Email-verified accounts only</li>
+                <li>• Network depth: 6 degrees of separation maximum</li>
+                <li>• Mutual connections prioritized in recommendations</li>
+              </ul>
             </div>
-            <div className="flex space-x-2">
-              <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors">
-                Export Data
-              </button>
-              <button className="border border-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-50 transition-colors">
-                Bulk Actions
-              </button>
+
+            <div>
+              <h4 className="font-medium mb-2">User Discovery Rules</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Friend suggestions based on mutual connections</li>
+                <li>• Interest-based recommendations using content analysis</li>
+                <li>• Geographic proximity suggestions (opt-in)</li>
+                <li>• Professional network suggestions (business accounts)</li>
+                <li>• Similar engagement pattern matching</li>
+                <li>• Exclude blocked or muted users from suggestions</li>
+              </ul>
             </div>
-          </div>
-          
-          <div className="divide-y">
-            {connections.map((connection) => (
-              <div key={connection.id} className="p-4 hover:bg-gray-50">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-4">
-                    <div className="flex items-center space-x-2">
-                      <span className="font-medium">{connection.follower}</span>
-                      <span className="text-gray-400">→</span>
-                      <span className="font-medium">{connection.following}</span>
-                    </div>
-                    {connection.mutualFollows && (
-                      <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">
-                        Mutual
-                      </span>
-                    )}
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <span className="text-sm text-gray-500">{connection.followedAt}</span>
-                    <span className={`px-2 py-1 rounded-full text-xs ${getStatusColor(connection.status)}`}>
-                      {connection.status}
-                    </span>
-                    <button className="text-blue-500 hover:text-blue-700 text-sm">
-                      Manage
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
+
+            <div>
+              <h4 className="font-medium mb-2">Network Health Rules</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Spam detection: Rapid following/unfollowing patterns</li>
+                <li>• Bot identification: Automated behavior analysis</li>
+                <li>• Fake account detection: Profile completeness scoring</li>
+                <li>• Network manipulation prevention: Coordinated inauthentic behavior</li>
+                <li>• Quality score calculation: Engagement authenticity metrics</li>
+                <li>• Regular network cleanup: Remove inactive connections</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-medium mb-2">Platform Integration Rules</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Cross-platform identity linking (marketplace, PM, fantasy)</li>
+                <li>• Unified social graph across all platforms</li>
+                <li>• Business relationship mapping (client-PM connections)</li>
+                <li>• Professional network separation from personal</li>
+                <li>• Platform-specific privacy controls</li>
+                <li>• Consistent user experience across platforms</li>
+              </ul>
+            </div>
+
+            <button className="bg-burnt-orange text-white px-4 py-2 rounded hover:bg-burnt-orange/90">
+              Update Network Rules
+            </button>
           </div>
         </div>
       )}
 
-      {/* Analytics Tab */}
-      {activeTab === 'analytics' && (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="bg-white p-6 rounded-lg shadow border">
-            <h3 className="text-lg font-semibold mb-4">Connection Growth</h3>
-            <div className="h-64 flex items-center justify-center text-gray-500">
-              <div className="text-center">
-                <span className="text-4xl mb-2 block">📈</span>
-                <p>Connection growth chart would go here</p>
-              </div>
-            </div>
-          </div>
+      {/* Connection Rules */}
+      {activeTab === 'connection-rules' && (
+        <div className="bg-white rounded-lg shadow border p-6">
+          <h3 className="text-lg font-semibold mb-4">Connection Management Rules</h3>
           
-          <div className="bg-white p-6 rounded-lg shadow border">
-            <h3 className="text-lg font-semibold mb-4">Network Health</h3>
-            <div className="space-y-4">
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">Connection Rate</span>
-                <span className="font-medium">94.2%</span>
-              </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
-                <div className="bg-green-500 h-2 rounded-full" style={{ width: '94.2%' }}></div>
-              </div>
-              
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">Engagement Score</span>
-                <span className="font-medium">87.5%</span>
-              </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
-                <div className="bg-blue-500 h-2 rounded-full" style={{ width: '87.5%' }}></div>
-              </div>
-              
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">Network Density</span>
-                <span className="font-medium">72.8%</span>
-              </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
-                <div className="bg-purple-500 h-2 rounded-full" style={{ width: '72.8%' }}></div>
+          <div className="space-y-4">
+            <div>
+              <h4 className="font-medium mb-2">Follow/Unfollow Rules</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Instant follow: Public accounts (no approval needed)</li>
+                <li>• Follow requests: Private accounts (approval required)</li>
+                <li>• Follow limits: 100 follows per hour, 1000 per day</li>
+                <li>• Unfollow restrictions: No limits on unfollowing</li>
+                <li>• Mutual follow benefits: Enhanced visibility in feeds</li>
+                <li>• Follow-back suggestions: Notify when followed by someone</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-medium mb-2">Connection Types</h4>
+              <div className="space-y-2">
+                <div className="border rounded p-3">
+                  <h5 className="font-medium text-blue-800">Personal Connections</h5>
+                  <ul className="text-sm text-gray-600 mt-1 space-y-1">
+                    <li>• Friends: Mutual following relationship</li>
+                    <li>• Followers: One-way following relationship</li>
+                    <li>• Close friends: Enhanced privacy and visibility</li>
+                    <li>• Blocked users: No interaction allowed</li>
+                  </ul>
+                </div>
+                <div className="border rounded p-3">
+                  <h5 className="font-medium text-green-800">Professional Connections</h5>
+                  <ul className="text-sm text-gray-600 mt-1 space-y-1">
+                    <li>• Business partners: Enhanced collaboration features</li>
+                    <li>• Clients: Project-based connection with access controls</li>
+                    <li>• Team members: Shared workspace access</li>
+                    <li>• Industry contacts: Professional networking features</li>
+                  </ul>
+                </div>
+                <div className="border rounded p-3">
+                  <h5 className="font-medium text-purple-800">Platform-Specific Connections</h5>
+                  <ul className="text-sm text-gray-600 mt-1 space-y-1">
+                    <li>• Fantasy league members: Game-specific interactions</li>
+                    <li>• Marketplace connections: Buyer-seller relationships</li>
+                    <li>• Content collaborators: Creative project partnerships</li>
+                    <li>• Community members: Shared interest groups</li>
+                  </ul>
+                </div>
               </div>
             </div>
+
+            <div>
+              <h4 className="font-medium mb-2">Connection Quality Rules</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Engagement scoring: Likes, comments, shares, messages</li>
+                <li>• Interaction frequency: Regular vs. occasional connections</li>
+                <li>• Content relevance: Shared interests and topics</li>
+                <li>• Response rate: How often users interact with each other</li>
+                <li>• Connection strength: Duration and depth of relationship</li>
+                <li>• Mutual benefit assessment: Value exchange between users</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-medium mb-2">Connection Moderation Rules</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Harassment prevention: Block abusive connection attempts</li>
+                <li>• Spam filtering: Detect mass following/unfollowing</li>
+                <li>• Fake connection detection: Identify bot networks</li>
+                <li>• Age-appropriate connections: Protect minors</li>
+                <li>• Geographic restrictions: Comply with local regulations</li>
+                <li>• Professional boundaries: Maintain appropriate business relationships</li>
+              </ul>
+            </div>
+
+            <button className="bg-burnt-orange text-white px-4 py-2 rounded hover:bg-burnt-orange/90">
+              Update Connection Rules
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Privacy Rules */}
+      {activeTab === 'privacy-rules' && (
+        <div className="bg-white rounded-lg shadow border p-6">
+          <h3 className="text-lg font-semibold mb-4">Privacy and Security Rules</h3>
+          
+          <div className="space-y-4">
+            <div>
+              <h4 className="font-medium mb-2">Account Privacy Levels</h4>
+              <div className="space-y-2">
+                <div className="border rounded p-3">
+                  <h5 className="font-medium text-green-800">Public Account</h5>
+                  <ul className="text-sm text-gray-600 mt-1 space-y-1">
+                    <li>• Profile visible to all users</li>
+                    <li>• Posts visible in public feeds</li>
+                    <li>• Can be found in search results</li>
+                    <li>• Anyone can follow without approval</li>
+                  </ul>
+                </div>
+                <div className="border rounded p-3">
+                  <h5 className="font-medium text-blue-800">Private Account</h5>
+                  <ul className="text-sm text-gray-600 mt-1 space-y-1">
+                    <li>• Profile visible to followers only</li>
+                    <li>• Posts visible to approved followers</li>
+                    <li>• Limited search visibility</li>
+                    <li>• Follow requests require approval</li>
+                  </ul>
+                </div>
+                <div className="border rounded p-3">
+                  <h5 className="font-medium text-purple-800">Business Account</h5>
+                  <ul className="text-sm text-gray-600 mt-1 space-y-1">
+                    <li>• Enhanced public visibility</li>
+                    <li>• Professional contact information</li>
+                    <li>• Business verification badge</li>
+                    <li>• Analytics and insights access</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h4 className="font-medium mb-2">Data Sharing Rules</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Connection data: Visible to mutual connections only</li>
+                <li>• Activity status: Opt-in sharing of online/offline status</li>
+                <li>• Location sharing: Explicit consent required</li>
+                <li>• Contact information: User-controlled visibility</li>
+                <li>• Cross-platform data: Unified privacy controls</li>
+                <li>• Third-party sharing: Explicit opt-in required</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-medium mb-2">Content Privacy Rules</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Post visibility: Public, followers, close friends, private</li>
+                <li>• Story privacy: 24-hour content with restricted access</li>
+                <li>• Message privacy: End-to-end encryption for sensitive content</li>
+                <li>• Media sharing: Watermarking for protected content</li>
+                <li>• Archive access: User-controlled content history</li>
+                <li>• Content deletion: Permanent removal with verification</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-medium mb-2">Safety and Security Rules</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Two-factor authentication: Required for sensitive operations</li>
+                <li>• Login monitoring: Alert on suspicious access patterns</li>
+                <li>• Device management: Track and control authorized devices</li>
+                <li>• Session security: Automatic logout after inactivity</li>
+                <li>• Data breach response: Immediate user notification</li>
+                <li>• Privacy audit: Regular review of data handling practices</li>
+              </ul>
+            </div>
+
+            <button className="bg-burnt-orange text-white px-4 py-2 rounded hover:bg-burnt-orange/90">
+              Update Privacy Rules
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Engagement Rules */}
+      {activeTab === 'engagement-rules' && (
+        <div className="bg-white rounded-lg shadow border p-6">
+          <h3 className="text-lg font-semibold mb-4">Engagement and Interaction Rules</h3>
+          
+          <div className="space-y-4">
+            <div>
+              <h4 className="font-medium mb-2">Interaction Types</h4>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="border rounded p-3">
+                  <h5 className="font-medium text-blue-800">Basic Interactions</h5>
+                  <ul className="text-sm text-gray-600 mt-1 space-y-1">
+                    <li>• Likes: Simple appreciation gesture</li>
+                    <li>• Comments: Text-based responses</li>
+                    <li>• Shares: Repost to own feed</li>
+                    <li>• Saves: Private bookmarking</li>
+                  </ul>
+                </div>
+                <div className="border rounded p-3">
+                  <h5 className="font-medium text-green-800">Advanced Interactions</h5>
+                  <ul className="text-sm text-gray-600 mt-1 space-y-1">
+                    <li>• Reactions: Emoji-based responses</li>
+                    <li>• Mentions: Tag other users in content</li>
+                    <li>• Direct messages: Private conversations</li>
+                    <li>• Collaborations: Joint content creation</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h4 className="font-medium mb-2">Engagement Rate Limits</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Likes: 1,000 per hour, 10,000 per day</li>
+                <li>• Comments: 100 per hour, 500 per day</li>
+                <li>• Shares: 50 per hour, 200 per day</li>
+                <li>• Direct messages: 200 per hour, 1,000 per day</li>
+                <li>• Mentions: 50 per hour, 200 per day</li>
+                <li>• Violation penalties: Temporary restrictions on excessive activity</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-medium mb-2">Content Engagement Rules</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Engagement scoring: Weighted by interaction type and timing</li>
+                <li>• Viral content detection: Rapid engagement growth monitoring</li>
+                <li>• Quality engagement: Prioritize meaningful interactions</li>
+                <li>• Engagement authenticity: Detect and penalize fake engagement</li>
+                <li>• Cross-platform engagement: Unified interaction tracking</li>
+                <li>• Engagement rewards: Incentivize quality participation</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-medium mb-2">Community Engagement Rules</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Group interactions: Enhanced engagement in communities</li>
+                <li>• Event participation: Special engagement features for events</li>
+                <li>• Challenge participation: Gamified engagement mechanics</li>
+                <li>• User-generated campaigns: Community-driven content initiatives</li>
+                <li>• Influencer engagement: Special features for high-engagement users</li>
+                <li>• Engagement analytics: Detailed insights for content creators</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-medium mb-2">Engagement Moderation Rules</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Spam prevention: Detect repetitive or automated engagement</li>
+                <li>• Harassment protection: Monitor and prevent abusive interactions</li>
+                <li>• Content appropriateness: Ensure engagement aligns with community standards</li>
+                <li>• Fake engagement detection: Identify and remove artificial interactions</li>
+                <li>• Engagement manipulation: Prevent coordinated inauthentic behavior</li>
+                <li>• Quality control: Maintain high standards for community interactions</li>
+              </ul>
+            </div>
+
+            <button className="bg-burnt-orange text-white px-4 py-2 rounded hover:bg-burnt-orange/90">
+              Update Engagement Rules
+            </button>
           </div>
         </div>
       )}

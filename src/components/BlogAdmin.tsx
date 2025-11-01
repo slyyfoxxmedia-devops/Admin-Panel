@@ -1,414 +1,348 @@
-import { useState, useEffect } from 'react'
-import { useApi } from '../hooks/useApi'
+import { useState } from 'react'
 
 const BlogAdmin = () => {
-  const [posts, setPosts] = useState([])
-  const [categories, setCategories] = useState([])
-  const [selectedPost, setSelectedPost] = useState(null)
-  const [showEditor, setShowEditor] = useState(false)
-  const [activeTab, setActiveTab] = useState('posts')
-  const { loading, error, request } = useApi()
-
-  useEffect(() => {
-    loadPosts()
-    loadCategories()
-  }, [])
-
-  const loadPosts = async () => {
-    const data = await request('/api/blog/posts')
-    if (data) setPosts(data)
-  }
-
-  const loadCategories = async () => {
-    const data = await request('/api/blog/categories')
-    if (data) setCategories(data)
-  }
-
-  const publishPost = async (postId) => {
-    await request(`/api/blog/posts/${postId}/publish`, 'POST')
-    loadPosts()
-  }
-
-  const unpublishPost = async (postId) => {
-    await request(`/api/blog/posts/${postId}/unpublish`, 'POST')
-    loadPosts()
-  }
-
-  const deletePost = async (postId) => {
-    await request(`/api/blog/posts/${postId}`, 'DELETE')
-    loadPosts()
-  }
-
-  const savePost = async (postData) => {
-    if (selectedPost) {
-      await request(`/api/blog/posts/${selectedPost.id}`, 'PUT', postData)
-    } else {
-      await request('/api/blog/posts', 'POST', postData)
-    }
-    loadPosts()
-    setShowEditor(false)
-    setSelectedPost(null)
-  }
-
-  const blogStats = {
-    totalPosts: posts.length,
-    publishedPosts: posts.filter(p => p.status === 'published').length,
-    draftPosts: posts.filter(p => p.status === 'draft').length,
-    totalViews: posts.reduce((sum, p) => sum + (p.views || 0), 0)
-  }
+  const [activeTab, setActiveTab] = useState('content-rules')
 
   return (
     <div className="space-y-6">
-      {/* Blog Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <div className="bg-white p-6 rounded-lg shadow border">
-          <h3 className="text-lg font-semibold mb-2">Total Posts</h3>
-          <p className="text-3xl font-bold text-blue-600">{blogStats.totalPosts}</p>
-        </div>
-        <div className="bg-white p-6 rounded-lg shadow border">
-          <h3 className="text-lg font-semibold mb-2">Published</h3>
-          <p className="text-3xl font-bold text-green-600">{blogStats.publishedPosts}</p>
-        </div>
-        <div className="bg-white p-6 rounded-lg shadow border">
-          <h3 className="text-lg font-semibold mb-2">Drafts</h3>
-          <p className="text-3xl font-bold text-yellow-600">{blogStats.draftPosts}</p>
-        </div>
-        <div className="bg-white p-6 rounded-lg shadow border">
-          <h3 className="text-lg font-semibold mb-2">Total Views</h3>
-          <p className="text-3xl font-bold text-purple-600">{blogStats.totalViews.toLocaleString()}</p>
-        </div>
-      </div>
-
       {/* Tab Navigation */}
-      <div className="bg-white rounded-lg shadow border">
-        <div className="border-b">
-          <nav className="flex space-x-8 px-6">
-            {['posts', 'categories', 'seo', 'analytics'].map(tab => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`py-4 px-1 border-b-2 font-medium text-sm ${
-                  activeTab === tab
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700'
-                }`}
-              >
-                {tab.charAt(0).toUpperCase() + tab.slice(1)}
-              </button>
-            ))}
-          </nav>
-        </div>
-
-        {/* Posts Tab */}
-        {activeTab === 'posts' && (
-          <div className="p-6">
-            <div className="flex justify-between items-center mb-6">
-              <h3 className="text-lg font-semibold">Blog Posts</h3>
-              <button
-                onClick={() => {
-                  setSelectedPost(null)
-                  setShowEditor(true)
-                }}
-                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-              >
-                New Post
-              </button>
-            </div>
-
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Title</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Category</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Views</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200">
-                  {posts.map(post => (
-                    <tr key={post.id}>
-                      <td className="px-6 py-4">
-                        <div className="font-medium text-gray-900">{post.title}</div>
-                        <div className="text-sm text-gray-500">{post.excerpt}</div>
-                      </td>
-                      <td className="px-6 py-4">
-                        <span className={`px-2 py-1 text-xs rounded-full ${
-                          post.status === 'published' ? 'bg-green-100 text-green-800' :
-                          post.status === 'scheduled' ? 'bg-blue-100 text-blue-800' :
-                          'bg-yellow-100 text-yellow-800'
-                        }`}>
-                          {post.status}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 text-sm text-gray-900">{post.category}</td>
-                      <td className="px-6 py-4 text-sm text-gray-900">{post.views || 0}</td>
-                      <td className="px-6 py-4 text-sm text-gray-900">
-                        {new Date(post.createdAt).toLocaleDateString()}
-                      </td>
-                      <td className="px-6 py-4 text-sm space-x-2">
-                        <button
-                          onClick={() => {
-                            setSelectedPost(post)
-                            setShowEditor(true)
-                          }}
-                          className="text-blue-600 hover:text-blue-800"
-                        >
-                          Edit
-                        </button>
-                        {post.status === 'draft' ? (
-                          <button
-                            onClick={() => publishPost(post.id)}
-                            className="text-green-600 hover:text-green-800"
-                          >
-                            Publish
-                          </button>
-                        ) : (
-                          <button
-                            onClick={() => unpublishPost(post.id)}
-                            className="text-yellow-600 hover:text-yellow-800"
-                          >
-                            Unpublish
-                          </button>
-                        )}
-                        <button
-                          onClick={() => deletePost(post.id)}
-                          className="text-red-600 hover:text-red-800"
-                        >
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        )}
-
-        {/* Categories Tab */}
-        {activeTab === 'categories' && (
-          <div className="p-6">
-            <div className="flex justify-between items-center mb-6">
-              <h3 className="text-lg font-semibold">Categories</h3>
-              <button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
-                Add Category
-              </button>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {categories.map(category => (
-                <div key={category.id} className="border rounded-lg p-4">
-                  <h4 className="font-medium">{category.name}</h4>
-                  <p className="text-sm text-gray-600">{category.description}</p>
-                  <p className="text-xs text-gray-500 mt-2">{category.postCount} posts</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* SEO Tab */}
-        {activeTab === 'seo' && (
-          <div className="p-6">
-            <h3 className="text-lg font-semibold mb-6">SEO Settings</h3>
-            <div className="space-y-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Default Meta Description
-                </label>
-                <textarea
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                  rows={3}
-                  placeholder="Default meta description for blog posts..."
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Default Keywords
-                </label>
-                <input
-                  type="text"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                  placeholder="digital marketing, web development, SlyyFoxxMedia"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Blog URL Structure
-                </label>
-                <select className="w-full px-3 py-2 border border-gray-300 rounded-md">
-                  <option>/blog/post-title</option>
-                  <option>/blog/category/post-title</option>
-                  <option>/blog/2024/post-title</option>
-                </select>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Analytics Tab */}
-        {activeTab === 'analytics' && (
-          <div className="p-6">
-            <h3 className="text-lg font-semibold mb-6">Blog Analytics</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="border rounded-lg p-4">
-                <h4 className="font-medium mb-4">Top Performing Posts</h4>
-                <div className="space-y-2">
-                  {posts.slice(0, 5).map(post => (
-                    <div key={post.id} className="flex justify-between">
-                      <span className="text-sm">{post.title}</span>
-                      <span className="text-sm text-gray-500">{post.views || 0} views</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div className="border rounded-lg p-4">
-                <h4 className="font-medium mb-4">Traffic Sources</h4>
-                <div className="space-y-2">
-                  <div className="flex justify-between">
-                    <span className="text-sm">Organic Search</span>
-                    <span className="text-sm text-gray-500">45%</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-sm">Social Media</span>
-                    <span className="text-sm text-gray-500">30%</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-sm">Direct</span>
-                    <span className="text-sm text-gray-500">25%</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+      <div className="border-b border-gray-200">
+        <nav className="-mb-px flex space-x-8">
+          {[
+            { id: 'content-rules', label: 'Content Rules', icon: '✍️' },
+            { id: 'category-rules', label: 'Category Rules', icon: '📂' },
+            { id: 'seo-rules', label: 'SEO Rules', icon: '🔍' },
+            { id: 'publishing-rules', label: 'Publishing Rules', icon: '📅' }
+          ].map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`py-2 px-1 border-b-2 font-medium text-sm flex items-center space-x-2 ${
+                activeTab === tab.id
+                  ? 'border-burnt-orange text-burnt-orange'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              <span>{tab.icon}</span>
+              <span>{tab.label}</span>
+            </button>
+          ))}
+        </nav>
       </div>
 
-      {/* Post Editor Modal */}
-      {showEditor && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-4xl max-h-[90vh] overflow-y-auto">
-            <h3 className="text-lg font-semibold mb-4">
-              {selectedPost ? 'Edit Post' : 'New Post'}
-            </h3>
-            <form onSubmit={(e) => {
-              e.preventDefault()
-              const formData = new FormData(e.target)
-              savePost({
-                title: formData.get('title'),
-                content: formData.get('content'),
-                excerpt: formData.get('excerpt'),
-                category: formData.get('category'),
-                tags: formData.get('tags'),
-                metaDescription: formData.get('metaDescription'),
-                status: formData.get('status')
-              })
-            }}>
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
-                  <input
-                    name="title"
-                    type="text"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                    defaultValue={selectedPost?.title || ''}
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Content</label>
-                  <textarea
-                    name="content"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                    rows={12}
-                    defaultValue={selectedPost?.content || ''}
-                    required
-                  />
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
-                    <select
-                      name="category"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                      defaultValue={selectedPost?.category || ''}
-                    >
-                      <option value="">Select Category</option>
-                      {categories.map(cat => (
-                        <option key={cat.id} value={cat.name}>{cat.name}</option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
-                    <select
-                      name="status"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                      defaultValue={selectedPost?.status || 'draft'}
-                    >
-                      <option value="draft">Draft</option>
-                      <option value="published">Published</option>
-                      <option value="scheduled">Scheduled</option>
-                    </select>
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Excerpt</label>
-                  <textarea
-                    name="excerpt"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                    rows={3}
-                    defaultValue={selectedPost?.excerpt || ''}
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Tags</label>
-                  <input
-                    name="tags"
-                    type="text"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                    placeholder="web development, marketing, tips"
-                    defaultValue={selectedPost?.tags || ''}
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Meta Description</label>
-                  <textarea
-                    name="metaDescription"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                    rows={2}
-                    defaultValue={selectedPost?.metaDescription || ''}
-                  />
-                </div>
-              </div>
-              <div className="flex gap-3 mt-6">
-                <button
-                  type="submit"
-                  className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-                >
-                  {selectedPost ? 'Update Post' : 'Create Post'}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setShowEditor(false)
-                    setSelectedPost(null)
-                  }}
-                  className="flex-1 px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400"
-                >
-                  Cancel
-                </button>
-              </div>
-            </form>
+      {/* Content Rules */}
+      {activeTab === 'content-rules' && (
+        <div className="bg-white rounded-lg shadow border p-6">
+          <h3 className="text-lg font-semibold mb-4">Blog Content Standards</h3>
+          
+          <div className="space-y-4">
+            <div>
+              <h4 className="font-medium mb-2">Content Requirements</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Minimum word count: 500 words per post</li>
+                <li>• Maximum word count: 3,000 words per post</li>
+                <li>• Required featured image (1200x630px minimum)</li>
+                <li>• Alt text required for all images</li>
+                <li>• Excerpt required (150-160 characters)</li>
+                <li>• At least 2 internal links per post</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-medium mb-2">Content Quality Standards</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Original content only (no plagiarism)</li>
+                <li>• Professional tone and grammar</li>
+                <li>• Fact-checking required for statistics</li>
+                <li>• Sources must be cited for external claims</li>
+                <li>• Content must align with brand voice</li>
+                <li>• No promotional content without disclosure</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-medium mb-2">Content Structure Rules</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• H1 tag for main title only</li>
+                <li>• H2-H6 tags for section headers</li>
+                <li>• Bullet points or numbered lists for readability</li>
+                <li>• Paragraph length: 3-4 sentences maximum</li>
+                <li>• Call-to-action in conclusion</li>
+                <li>• Table of contents for posts over 1,500 words</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-medium mb-2">Prohibited Content</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Copyrighted material without permission</li>
+                <li>• Offensive or discriminatory language</li>
+                <li>• Misleading or false information</li>
+                <li>• Spam or overly promotional content</li>
+                <li>• Personal attacks or defamatory statements</li>
+                <li>• Content violating privacy rights</li>
+              </ul>
+            </div>
+
+            <button className="bg-burnt-orange text-white px-4 py-2 rounded hover:bg-burnt-orange/90">
+              Update Content Rules
+            </button>
           </div>
         </div>
       )}
 
-      {error && (
-        <div className="bg-red-50 border border-red-200 rounded-md p-4">
-          <p className="text-red-800">{error}</p>
+      {/* Category Rules */}
+      {activeTab === 'category-rules' && (
+        <div className="bg-white rounded-lg shadow border p-6">
+          <h3 className="text-lg font-semibold mb-4">Blog Category Configuration</h3>
+          
+          <div className="space-y-4">
+            <div>
+              <h4 className="font-medium mb-2">Required Categories</h4>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="border rounded p-3">
+                  <h5 className="font-medium text-blue-800">Business Categories</h5>
+                  <ul className="text-sm text-gray-600 mt-1 space-y-1">
+                    <li>• Digital Marketing</li>
+                    <li>• Web Development</li>
+                    <li>• E-commerce</li>
+                    <li>• Business Strategy</li>
+                    <li>• Entrepreneurship</li>
+                  </ul>
+                </div>
+                <div className="border rounded p-3">
+                  <h5 className="font-medium text-green-800">Creative Categories</h5>
+                  <ul className="text-sm text-gray-600 mt-1 space-y-1">
+                    <li>• Design Trends</li>
+                    <li>• Audio Production</li>
+                    <li>• Content Creation</li>
+                    <li>• Brand Identity</li>
+                    <li>• Creative Tools</li>
+                  </ul>
+                </div>
+                <div className="border rounded p-3">
+                  <h5 className="font-medium text-purple-800">Technology Categories</h5>
+                  <ul className="text-sm text-gray-600 mt-1 space-y-1">
+                    <li>• Software Reviews</li>
+                    <li>• Tech Tutorials</li>
+                    <li>• Industry News</li>
+                    <li>• Platform Updates</li>
+                    <li>• API Documentation</li>
+                  </ul>
+                </div>
+                <div className="border rounded p-3">
+                  <h5 className="font-medium text-orange-800">Community Categories</h5>
+                  <ul className="text-sm text-gray-600 mt-1 space-y-1">
+                    <li>• Success Stories</li>
+                    <li>• Community Spotlights</li>
+                    <li>• Events & Webinars</li>
+                    <li>• User Guides</li>
+                    <li>• FAQ & Support</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h4 className="font-medium mb-2">Category Management Rules</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Each post must be assigned to exactly one primary category</li>
+                <li>• Maximum 3 secondary categories per post</li>
+                <li>• Category descriptions required (50-150 characters)</li>
+                <li>• Category URLs must be SEO-friendly slugs</li>
+                <li>• New categories require content manager approval</li>
+                <li>• Minimum 5 posts required before category goes live</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-medium mb-2">Category Display Rules</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Categories displayed in alphabetical order</li>
+                <li>• Post count shown for each category</li>
+                <li>• Featured categories highlighted on homepage</li>
+                <li>• Empty categories hidden from navigation</li>
+                <li>• Category archives paginated (10 posts per page)</li>
+              </ul>
+            </div>
+
+            <button className="bg-burnt-orange text-white px-4 py-2 rounded hover:bg-burnt-orange/90">
+              Update Category Rules
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* SEO Rules */}
+      {activeTab === 'seo-rules' && (
+        <div className="bg-white rounded-lg shadow border p-6">
+          <h3 className="text-lg font-semibold mb-4">SEO Configuration Rules</h3>
+          
+          <div className="space-y-4">
+            <div>
+              <h4 className="font-medium mb-2">Title Tag Requirements</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Title length: 50-60 characters optimal</li>
+                <li>• Include primary keyword in title</li>
+                <li>• Brand name at end: "Post Title | SlyyFoxxMedia"</li>
+                <li>• Unique titles for each post</li>
+                <li>• No keyword stuffing in titles</li>
+                <li>• Action words encouraged (How to, Guide, Tips)</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-medium mb-2">Meta Description Standards</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Length: 150-160 characters optimal</li>
+                <li>• Include primary and secondary keywords</li>
+                <li>• Compelling call-to-action included</li>
+                <li>• Unique descriptions for each post</li>
+                <li>• No duplicate meta descriptions</li>
+                <li>• Preview snippet optimization</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-medium mb-2">URL Structure Rules</h4>
+              <div className="border rounded p-3 bg-gray-50">
+                <h5 className="font-medium mb-2">URL Format Options</h5>
+                <ul className="text-sm text-gray-600 space-y-1">
+                  <li>• Standard: /blog/post-title-slug</li>
+                  <li>• Category: /blog/category/post-title-slug</li>
+                  <li>• Date: /blog/2024/01/post-title-slug</li>
+                </ul>
+              </div>
+              <ul className="text-sm space-y-1 text-gray-600 mt-2">
+                <li>• URLs must be lowercase with hyphens</li>
+                <li>• Maximum 5 words in URL slug</li>
+                <li>• No special characters or spaces</li>
+                <li>• Include primary keyword in URL</li>
+                <li>• Permanent redirects for changed URLs</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-medium mb-2">Schema Markup Requirements</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Article schema for all blog posts</li>
+                <li>• Author schema with bio and image</li>
+                <li>• Organization schema for SlyyFoxxMedia</li>
+                <li>• Breadcrumb schema for navigation</li>
+                <li>• FAQ schema for Q&A posts</li>
+                <li>• Review schema for product reviews</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-medium mb-2">Internal Linking Rules</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Minimum 2 internal links per post</li>
+                <li>• Link to related posts in same category</li>
+                <li>• Link to cornerstone content when relevant</li>
+                <li>• Use descriptive anchor text (no "click here")</li>
+                <li>• Link to service pages when appropriate</li>
+                <li>• Update old posts with links to new content</li>
+              </ul>
+            </div>
+
+            <button className="bg-burnt-orange text-white px-4 py-2 rounded hover:bg-burnt-orange/90">
+              Update SEO Rules
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Publishing Rules */}
+      {activeTab === 'publishing-rules' && (
+        <div className="bg-white rounded-lg shadow border p-6">
+          <h3 className="text-lg font-semibold mb-4">Publishing Workflow Rules</h3>
+          
+          <div className="space-y-4">
+            <div>
+              <h4 className="font-medium mb-2">Content Approval Workflow</h4>
+              <div className="space-y-2">
+                <div className="border rounded p-3">
+                  <h5 className="font-medium text-yellow-800">Draft Stage</h5>
+                  <ul className="text-sm text-gray-600 mt-1 space-y-1">
+                    <li>• Author creates and saves draft</li>
+                    <li>• Content review checklist completed</li>
+                    <li>• SEO optimization verified</li>
+                    <li>• Images and media uploaded</li>
+                  </ul>
+                </div>
+                <div className="border rounded p-3">
+                  <h5 className="font-medium text-blue-800">Review Stage</h5>
+                  <ul className="text-sm text-gray-600 mt-1 space-y-1">
+                    <li>• Editor reviews for quality and accuracy</li>
+                    <li>• SEO specialist checks optimization</li>
+                    <li>• Legal review for sensitive topics</li>
+                    <li>• Brand compliance verification</li>
+                  </ul>
+                </div>
+                <div className="border rounded p-3">
+                  <h5 className="font-medium text-green-800">Published Stage</h5>
+                  <ul className="text-sm text-gray-600 mt-1 space-y-1">
+                    <li>• Content manager final approval</li>
+                    <li>• Scheduled or immediate publication</li>
+                    <li>• Social media promotion scheduled</li>
+                    <li>• Analytics tracking enabled</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h4 className="font-medium mb-2">Publishing Schedule Rules</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Minimum 2 posts per week</li>
+                <li>• Maximum 1 post per day</li>
+                <li>• Optimal posting times: Tuesday-Thursday 10 AM EST</li>
+                <li>• No publishing on weekends unless urgent</li>
+                <li>• Holiday schedule adjusted in advance</li>
+                <li>• Content calendar planned 30 days ahead</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-medium mb-2">Post Status Rules</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Draft: Work in progress, not visible to public</li>
+                <li>• Pending Review: Submitted for editorial review</li>
+                <li>• Scheduled: Approved and scheduled for publication</li>
+                <li>• Published: Live and visible to public</li>
+                <li>• Archived: Removed from public but preserved</li>
+                <li>• Deleted: Permanently removed (requires admin approval)</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-medium mb-2">Content Update Rules</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Major updates require re-approval</li>
+                <li>• Minor edits (typos, formatting) can be published immediately</li>
+                <li>• Updated date shown for significant changes</li>
+                <li>• Version history maintained for all posts</li>
+                <li>• Redirects created for URL changes</li>
+                <li>• Social media re-promotion for major updates</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-medium mb-2">Author Permissions</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Authors can create and edit own drafts</li>
+                <li>• Editors can review and approve all content</li>
+                <li>• Content managers can publish immediately</li>
+                <li>• Admins have full access to all posts</li>
+                <li>• Guest authors require editor supervision</li>
+              </ul>
+            </div>
+
+            <button className="bg-burnt-orange text-white px-4 py-2 rounded hover:bg-burnt-orange/90">
+              Update Publishing Rules
+            </button>
+          </div>
         </div>
       )}
     </div>

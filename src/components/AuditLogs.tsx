@@ -1,72 +1,18 @@
 import { useState } from 'react'
 
 const AuditLogs = () => {
-  const [activeTab, setActiveTab] = useState('recent')
-
-  const recentLogs = [
-    { id: 1, timestamp: '2024-01-15 15:30:45', user: 'admin@slyyfox.com', action: 'User Account Suspended', target: 'user123@example.com', ip: '192.168.1.100', severity: 'High' },
-    { id: 2, timestamp: '2024-01-15 15:25:12', user: 'sarah@slyyfox.com', action: 'Product Approved', target: 'Audio Pack #4567', ip: '192.168.1.101', severity: 'Medium' },
-    { id: 3, timestamp: '2024-01-15 15:20:33', user: 'mike@slyyfox.com', action: 'Escrow Funds Released', target: 'Transaction #TX789', ip: '192.168.1.102', severity: 'High' },
-    { id: 4, timestamp: '2024-01-15 15:15:07', user: 'admin@slyyfox.com', action: 'Email Template Updated', target: 'Welcome Email', ip: '192.168.1.100', severity: 'Low' },
-    { id: 5, timestamp: '2024-01-15 15:10:22', user: 'alex@slyyfox.com', action: 'CMS Page Published', target: 'Seller Profile: Digital Studios', ip: '192.168.1.103', severity: 'Medium' }
-  ]
-
-  const securityEvents = [
-    { id: 1, timestamp: '2024-01-15 14:45:12', event: 'Failed Login Attempt', user: 'unknown', ip: '203.0.113.45', attempts: 5, status: 'Blocked' },
-    { id: 2, timestamp: '2024-01-15 13:30:08', event: 'Suspicious API Activity', user: 'api_user_456', ip: '198.51.100.23', attempts: 1, status: 'Investigating' },
-    { id: 3, timestamp: '2024-01-15 12:15:33', event: 'Admin Password Changed', user: 'admin@slyyfox.com', ip: '192.168.1.100', attempts: 1, status: 'Success' },
-    { id: 4, timestamp: '2024-01-15 11:20:45', event: 'Unauthorized Access Attempt', user: 'unknown', ip: '203.0.113.67', attempts: 3, status: 'Blocked' }
-  ]
-
-  const systemChanges = [
-    { id: 1, timestamp: '2024-01-15 16:00:00', change: 'Database Schema Update', component: 'User Management', version: 'v2.1.3', user: 'system' },
-    { id: 2, timestamp: '2024-01-15 14:30:00', change: 'API Rate Limit Updated', component: 'API Gateway', version: 'v1.8.2', user: 'admin@slyyfox.com' },
-    { id: 3, timestamp: '2024-01-15 12:00:00', change: 'Email Service Configuration', component: 'AWS SES', version: 'v3.2.1', user: 'mike@slyyfox.com' },
-    { id: 4, timestamp: '2024-01-15 10:15:00', change: 'S3 Bucket Policy Updated', component: 'File Storage', version: 'v1.5.4', user: 'sarah@slyyfox.com' }
-  ]
-
-  const complianceEvents = [
-    { id: 1, timestamp: '2024-01-15 15:45:00', event: 'GDPR Data Export Request', user: 'user789@example.com', status: 'Completed', officer: 'compliance@slyyfox.com' },
-    { id: 2, timestamp: '2024-01-15 14:20:00', event: 'Content Violation Report', user: 'reporter@example.com', status: 'Under Review', officer: 'sarah@slyyfox.com' },
-    { id: 3, timestamp: '2024-01-15 13:10:00', event: 'Legal Request Received', user: 'legal@court.gov', status: 'Processing', officer: 'legal@slyyfox.com' },
-    { id: 4, timestamp: '2024-01-15 11:30:00', event: 'Data Retention Policy Applied', user: 'system', status: 'Completed', officer: 'compliance@slyyfox.com' }
-  ]
+  const [activeTab, setActiveTab] = useState('logging-rules')
 
   return (
     <div className="space-y-6">
-      {/* Audit Overview Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <div className="bg-blue-50 p-6 rounded-lg border border-blue-200">
-          <h3 className="text-lg font-semibold text-blue-800">Total Events (24h)</h3>
-          <p className="text-3xl font-bold text-blue-600">1,247</p>
-          <p className="text-sm text-blue-600">+15% from yesterday</p>
-        </div>
-        <div className="bg-red-50 p-6 rounded-lg border border-red-200">
-          <h3 className="text-lg font-semibold text-red-800">Security Alerts</h3>
-          <p className="text-3xl font-bold text-red-600">8</p>
-          <p className="text-sm text-red-600">3 high priority</p>
-        </div>
-        <div className="bg-yellow-50 p-6 rounded-lg border border-yellow-200">
-          <h3 className="text-lg font-semibold text-yellow-800">Failed Logins</h3>
-          <p className="text-3xl font-bold text-yellow-600">23</p>
-          <p className="text-sm text-yellow-600">5 IPs blocked</p>
-        </div>
-        <div className="bg-green-50 p-6 rounded-lg border border-green-200">
-          <h3 className="text-lg font-semibold text-green-800">Compliance Events</h3>
-          <p className="text-3xl font-bold text-green-600">12</p>
-          <p className="text-sm text-green-600">All processed</p>
-        </div>
-      </div>
-
       {/* Tab Navigation */}
       <div className="border-b border-gray-200">
         <nav className="-mb-px flex space-x-8">
           {[
-            { id: 'recent', label: 'Recent Activity', icon: '🕐' },
-            { id: 'security', label: 'Security Events', icon: '🔒' },
-            { id: 'system', label: 'System Changes', icon: '⚙️' },
-            { id: 'compliance', label: 'Compliance', icon: '⚖️' },
-            { id: 'search', label: 'Advanced Search', icon: '🔍' }
+            { id: 'logging-rules', label: 'Logging Rules', icon: '📝' },
+            { id: 'retention-policy', label: 'Retention Policy', icon: '🗄️' },
+            { id: 'alert-config', label: 'Alert Configuration', icon: '🚨' },
+            { id: 'access-control', label: 'Access Control', icon: '🔐' }
           ].map((tab) => (
             <button
               key={tab.id}
@@ -84,274 +30,262 @@ const AuditLogs = () => {
         </nav>
       </div>
 
-      {/* Recent Activity */}
-      {activeTab === 'recent' && (
-        <div className="bg-white rounded-lg shadow border">
-          <div className="p-6 border-b border-gray-200">
-            <div className="flex justify-between items-center">
-              <h3 className="text-lg font-semibold">Recent Administrative Actions</h3>
-              <div className="flex space-x-2">
-                <select className="border border-gray-300 rounded px-3 py-1 text-sm">
-                  <option>All Actions</option>
-                  <option>User Management</option>
-                  <option>Product Management</option>
-                  <option>Financial</option>
-                  <option>Content</option>
-                </select>
-                <select className="border border-gray-300 rounded px-3 py-1 text-sm">
-                  <option>All Severity</option>
-                  <option>High</option>
-                  <option>Medium</option>
-                  <option>Low</option>
-                </select>
+      {/* Logging Rules */}
+      {activeTab === 'logging-rules' && (
+        <div className="bg-white rounded-lg shadow border p-6">
+          <h3 className="text-lg font-semibold mb-4">Audit Logging Configuration</h3>
+          
+          <div className="space-y-4">
+            <div>
+              <h4 className="font-medium mb-2">Required Audit Events</h4>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="border rounded p-3">
+                  <h5 className="font-medium text-red-800">High Priority Events</h5>
+                  <ul className="text-sm text-gray-600 mt-1 space-y-1">
+                    <li>• User account creation/deletion</li>
+                    <li>• Admin privilege changes</li>
+                    <li>• Financial transactions</li>
+                    <li>• Security policy changes</li>
+                    <li>• Data export/backup operations</li>
+                  </ul>
+                </div>
+                <div className="border rounded p-3">
+                  <h5 className="font-medium text-orange-800">Medium Priority Events</h5>
+                  <ul className="text-sm text-gray-600 mt-1 space-y-1">
+                    <li>• Content moderation actions</li>
+                    <li>• Product approval/rejection</li>
+                    <li>• Email template changes</li>
+                    <li>• CMS content updates</li>
+                    <li>• API configuration changes</li>
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Timestamp</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">User</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Action</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Target</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">IP Address</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Severity</th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {recentLogs.map((log) => (
-                  <tr key={log.id}>
-                    <td className="px-6 py-4 text-sm text-gray-900">{log.timestamp}</td>
-                    <td className="px-6 py-4 text-sm text-gray-900">{log.user}</td>
-                    <td className="px-6 py-4 text-sm text-gray-900">{log.action}</td>
-                    <td className="px-6 py-4 text-sm text-gray-900">{log.target}</td>
-                    <td className="px-6 py-4 text-sm text-gray-500">{log.ip}</td>
-                    <td className="px-6 py-4">
-                      <span className={`px-2 py-1 text-xs rounded-full ${
-                        log.severity === 'High' ? 'bg-red-100 text-red-800' :
-                        log.severity === 'Medium' ? 'bg-yellow-100 text-yellow-800' :
-                        'bg-green-100 text-green-800'
-                      }`}>
-                        {log.severity}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+
+            <div>
+              <h4 className="font-medium mb-2">Log Entry Requirements</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Timestamp (UTC format required)</li>
+                <li>• User ID and email address</li>
+                <li>• Action performed with detailed description</li>
+                <li>• Target resource (ID, name, type)</li>
+                <li>• Source IP address and user agent</li>
+                <li>• Session ID and request ID</li>
+                <li>• Before/after values for changes</li>
+                <li>• Success/failure status with error codes</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-medium mb-2">Logging Exclusions</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Routine system health checks</li>
+                <li>• Automated backup processes</li>
+                <li>• Read-only data queries</li>
+                <li>• Static file requests</li>
+                <li>• Heartbeat/ping requests</li>
+              </ul>
+            </div>
+
+            <button className="bg-burnt-orange text-white px-4 py-2 rounded hover:bg-burnt-orange/90">
+              Update Logging Rules
+            </button>
           </div>
         </div>
       )}
 
-      {/* Security Events */}
-      {activeTab === 'security' && (
-        <div className="bg-white rounded-lg shadow border">
-          <div className="p-6 border-b border-gray-200">
-            <h3 className="text-lg font-semibold">Security Events & Threats</h3>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Timestamp</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Event Type</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">User/Source</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">IP Address</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Attempts</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {securityEvents.map((event) => (
-                  <tr key={event.id}>
-                    <td className="px-6 py-4 text-sm text-gray-900">{event.timestamp}</td>
-                    <td className="px-6 py-4 text-sm text-gray-900">{event.event}</td>
-                    <td className="px-6 py-4 text-sm text-gray-900">{event.user}</td>
-                    <td className="px-6 py-4 text-sm text-gray-500">{event.ip}</td>
-                    <td className="px-6 py-4 text-sm text-gray-900">{event.attempts}</td>
-                    <td className="px-6 py-4">
-                      <span className={`px-2 py-1 text-xs rounded-full ${
-                        event.status === 'Blocked' ? 'bg-red-100 text-red-800' :
-                        event.status === 'Investigating' ? 'bg-yellow-100 text-yellow-800' :
-                        'bg-green-100 text-green-800'
-                      }`}>
-                        {event.status}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+      {/* Retention Policy */}
+      {activeTab === 'retention-policy' && (
+        <div className="bg-white rounded-lg shadow border p-6">
+          <h3 className="text-lg font-semibold mb-4">Log Retention Policy</h3>
+          
+          <div className="space-y-4">
+            <div>
+              <h4 className="font-medium mb-2">Retention Periods by Category</h4>
+              <div className="space-y-3">
+                <div className="border rounded p-3">
+                  <div className="flex justify-between items-center">
+                    <h5 className="font-medium">Security Events</h5>
+                    <span className="text-sm bg-red-100 text-red-800 px-2 py-1 rounded">7 Years</span>
+                  </div>
+                  <p className="text-sm text-gray-600 mt-1">Login attempts, access violations, privilege changes</p>
+                </div>
+                <div className="border rounded p-3">
+                  <div className="flex justify-between items-center">
+                    <h5 className="font-medium">Financial Transactions</h5>
+                    <span className="text-sm bg-orange-100 text-orange-800 px-2 py-1 rounded">7 Years</span>
+                  </div>
+                  <p className="text-sm text-gray-600 mt-1">Payments, refunds, escrow operations, billing changes</p>
+                </div>
+                <div className="border rounded p-3">
+                  <div className="flex justify-between items-center">
+                    <h5 className="font-medium">User Management</h5>
+                    <span className="text-sm bg-blue-100 text-blue-800 px-2 py-1 rounded">3 Years</span>
+                  </div>
+                  <p className="text-sm text-gray-600 mt-1">Account creation, profile changes, suspensions</p>
+                </div>
+                <div className="border rounded p-3">
+                  <div className="flex justify-between items-center">
+                    <h5 className="font-medium">Content Operations</h5>
+                    <span className="text-sm bg-green-100 text-green-800 px-2 py-1 rounded">2 Years</span>
+                  </div>
+                  <p className="text-sm text-gray-600 mt-1">Product uploads, content moderation, CMS changes</p>
+                </div>
+                <div className="border rounded p-3">
+                  <div className="flex justify-between items-center">
+                    <h5 className="font-medium">System Operations</h5>
+                    <span className="text-sm bg-gray-100 text-gray-800 px-2 py-1 rounded">1 Year</span>
+                  </div>
+                  <p className="text-sm text-gray-600 mt-1">Configuration changes, deployments, maintenance</p>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h4 className="font-medium mb-2">Archive and Deletion Rules</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Logs older than 90 days moved to cold storage</li>
+                <li>• Logs older than 1 year compressed and encrypted</li>
+                <li>• Legal hold prevents automatic deletion</li>
+                <li>• Compliance officer approval required for early deletion</li>
+                <li>• Secure deletion with certificate of destruction</li>
+              </ul>
+            </div>
+
+            <button className="bg-burnt-orange text-white px-4 py-2 rounded hover:bg-burnt-orange/90">
+              Update Retention Policy
+            </button>
           </div>
         </div>
       )}
 
-      {/* System Changes */}
-      {activeTab === 'system' && (
-        <div className="bg-white rounded-lg shadow border">
-          <div className="p-6 border-b border-gray-200">
-            <h3 className="text-lg font-semibold">System Configuration Changes</h3>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Timestamp</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Change Type</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Component</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Version</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Changed By</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {systemChanges.map((change) => (
-                  <tr key={change.id}>
-                    <td className="px-6 py-4 text-sm text-gray-900">{change.timestamp}</td>
-                    <td className="px-6 py-4 text-sm text-gray-900">{change.change}</td>
-                    <td className="px-6 py-4 text-sm text-gray-900">{change.component}</td>
-                    <td className="px-6 py-4 text-sm text-gray-500">{change.version}</td>
-                    <td className="px-6 py-4 text-sm text-gray-900">{change.user}</td>
-                    <td className="px-6 py-4 text-sm">
-                      <button className="text-blue-600 hover:text-blue-800">View Details</button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+      {/* Alert Configuration */}
+      {activeTab === 'alert-config' && (
+        <div className="bg-white rounded-lg shadow border p-6">
+          <h3 className="text-lg font-semibold mb-4">Security Alert Configuration</h3>
+          
+          <div className="space-y-4">
+            <div>
+              <h4 className="font-medium mb-2">Critical Alert Triggers</h4>
+              <div className="space-y-2">
+                <div className="border rounded p-3">
+                  <h5 className="font-medium text-red-800">Immediate Alerts (Real-time)</h5>
+                  <ul className="text-sm text-gray-600 mt-1 space-y-1">
+                    <li>• 5+ failed login attempts from same IP (15 minutes)</li>
+                    <li>• Admin privilege escalation</li>
+                    <li>• Unauthorized API access attempts</li>
+                    <li>• Large financial transaction ($10,000+)</li>
+                    <li>• Mass user account changes (10+ accounts)</li>
+                  </ul>
+                </div>
+                <div className="border rounded p-3">
+                  <h5 className="font-medium text-orange-800">Hourly Alert Summary</h5>
+                  <ul className="text-sm text-gray-600 mt-1 space-y-1">
+                    <li>• Unusual login patterns</li>
+                    <li>• High volume of content reports</li>
+                    <li>• System performance anomalies</li>
+                    <li>• Failed payment processing spikes</li>
+                  </ul>
+                </div>
+                <div className="border rounded p-3">
+                  <h5 className="font-medium text-blue-800">Daily Alert Digest</h5>
+                  <ul className="text-sm text-gray-600 mt-1 space-y-1">
+                    <li>• Security event summary</li>
+                    <li>• Compliance event status</li>
+                    <li>• System health overview</li>
+                    <li>• User activity patterns</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h4 className="font-medium mb-2">Alert Recipients</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Critical alerts → Security team + CTO + CEO</li>
+                <li>• Financial alerts → Finance team + CFO</li>
+                <li>• Compliance alerts → Legal team + Compliance officer</li>
+                <li>• System alerts → DevOps team + Engineering manager</li>
+                <li>• User alerts → Customer support + Community manager</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-medium mb-2">Alert Delivery Methods</h4>
+              <div className="grid grid-cols-3 gap-2 text-sm">
+                <span className="px-3 py-1 bg-red-100 text-red-800 rounded">Email (Critical)</span>
+                <span className="px-3 py-1 bg-orange-100 text-orange-800 rounded">SMS (High Priority)</span>
+                <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded">Slack (Medium)</span>
+                <span className="px-3 py-1 bg-green-100 text-green-800 rounded">Dashboard (Low)</span>
+                <span className="px-3 py-1 bg-purple-100 text-purple-800 rounded">Webhook (API)</span>
+                <span className="px-3 py-1 bg-gray-100 text-gray-800 rounded">Mobile Push</span>
+              </div>
+            </div>
+
+            <button className="bg-burnt-orange text-white px-4 py-2 rounded hover:bg-burnt-orange/90">
+              Update Alert Configuration
+            </button>
           </div>
         </div>
       )}
 
-      {/* Compliance Events */}
-      {activeTab === 'compliance' && (
-        <div className="bg-white rounded-lg shadow border">
-          <div className="p-6 border-b border-gray-200">
-            <h3 className="text-lg font-semibold">Compliance & Legal Events</h3>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Timestamp</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Event Type</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Requestor</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Assigned Officer</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {complianceEvents.map((event) => (
-                  <tr key={event.id}>
-                    <td className="px-6 py-4 text-sm text-gray-900">{event.timestamp}</td>
-                    <td className="px-6 py-4 text-sm text-gray-900">{event.event}</td>
-                    <td className="px-6 py-4 text-sm text-gray-900">{event.user}</td>
-                    <td className="px-6 py-4">
-                      <span className={`px-2 py-1 text-xs rounded-full ${
-                        event.status === 'Completed' ? 'bg-green-100 text-green-800' :
-                        event.status === 'Processing' ? 'bg-blue-100 text-blue-800' :
-                        'bg-yellow-100 text-yellow-800'
-                      }`}>
-                        {event.status}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 text-sm text-gray-900">{event.officer}</td>
-                    <td className="px-6 py-4 text-sm">
-                      <button className="text-blue-600 hover:text-blue-800">View Case</button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )}
+      {/* Access Control */}
+      {activeTab === 'access-control' && (
+        <div className="bg-white rounded-lg shadow border p-6">
+          <h3 className="text-lg font-semibold mb-4">Audit Log Access Control</h3>
+          
+          <div className="space-y-4">
+            <div>
+              <h4 className="font-medium mb-2">Access Levels</h4>
+              <div className="space-y-2">
+                <div className="border rounded p-3">
+                  <h5 className="font-medium text-red-800">Full Access</h5>
+                  <p className="text-sm text-gray-600">View all logs, export data, configure settings</p>
+                  <p className="text-xs text-gray-500 mt-1">Roles: Security Admin, Compliance Officer, CTO</p>
+                </div>
+                <div className="border rounded p-3">
+                  <h5 className="font-medium text-orange-800">Department Access</h5>
+                  <p className="text-sm text-gray-600">View logs related to department operations</p>
+                  <p className="text-xs text-gray-500 mt-1">Roles: Department Heads, Team Leads</p>
+                </div>
+                <div className="border rounded p-3">
+                  <h5 className="font-medium text-blue-800">Limited Access</h5>
+                  <p className="text-sm text-gray-600">View own actions and team activities</p>
+                  <p className="text-xs text-gray-500 mt-1">Roles: Managers, Senior Staff</p>
+                </div>
+                <div className="border rounded p-3">
+                  <h5 className="font-medium text-gray-800">No Access</h5>
+                  <p className="text-sm text-gray-600">Cannot view audit logs</p>
+                  <p className="text-xs text-gray-500 mt-1">Roles: Regular Users, Contractors</p>
+                </div>
+              </div>
+            </div>
 
-      {/* Advanced Search */}
-      {activeTab === 'search' && (
-        <div className="space-y-6">
-          <div className="bg-white rounded-lg shadow border p-6">
-            <h3 className="text-lg font-semibold mb-4">Advanced Audit Search</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Date Range</label>
-                <div className="flex space-x-2">
-                  <input type="date" className="flex-1 border border-gray-300 rounded px-3 py-2 text-sm" />
-                  <input type="date" className="flex-1 border border-gray-300 rounded px-3 py-2 text-sm" />
-                </div>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">User</label>
-                <input type="text" placeholder="Enter email or username" className="w-full border border-gray-300 rounded px-3 py-2 text-sm" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Action Type</label>
-                <select className="w-full border border-gray-300 rounded px-3 py-2 text-sm">
-                  <option>All Actions</option>
-                  <option>User Management</option>
-                  <option>Product Management</option>
-                  <option>Financial Operations</option>
-                  <option>Content Management</option>
-                  <option>Security Events</option>
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">IP Address</label>
-                <input type="text" placeholder="Enter IP address" className="w-full border border-gray-300 rounded px-3 py-2 text-sm" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Severity</label>
-                <select className="w-full border border-gray-300 rounded px-3 py-2 text-sm">
-                  <option>All Levels</option>
-                  <option>High</option>
-                  <option>Medium</option>
-                  <option>Low</option>
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Target Resource</label>
-                <input type="text" placeholder="Enter resource ID or name" className="w-full border border-gray-300 rounded px-3 py-2 text-sm" />
-              </div>
+            <div>
+              <h4 className="font-medium mb-2">Search and Export Restrictions</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Date range limited to 90 days for non-admin users</li>
+                <li>• Export limited to 10,000 records per request</li>
+                <li>• Sensitive data fields masked for limited access users</li>
+                <li>• All search queries logged and monitored</li>
+                <li>• Export approval required for bulk data requests</li>
+              </ul>
             </div>
-            <div className="mt-6 flex space-x-4">
-              <button className="bg-burnt-orange text-white px-6 py-2 rounded hover:bg-burnt-orange/90">
-                Search Logs
-              </button>
-              <button className="border border-gray-300 px-6 py-2 rounded hover:bg-gray-50">
-                Export Results
-              </button>
-              <button className="border border-gray-300 px-6 py-2 rounded hover:bg-gray-50">
-                Save Search
-              </button>
-            </div>
-          </div>
 
-          <div className="bg-white rounded-lg shadow border p-6">
-            <h3 className="text-lg font-semibold mb-4">Saved Searches</h3>
-            <div className="space-y-2">
-              <div className="flex items-center justify-between p-3 bg-gray-50 rounded">
-                <div>
-                  <div className="font-medium">High Severity Events - Last 7 Days</div>
-                  <div className="text-sm text-gray-600">Created by admin@slyyfox.com</div>
-                </div>
-                <div className="flex space-x-2">
-                  <button className="text-blue-600 hover:text-blue-800 text-sm">Run</button>
-                  <button className="text-red-600 hover:text-red-800 text-sm">Delete</button>
-                </div>
-              </div>
-              <div className="flex items-center justify-between p-3 bg-gray-50 rounded">
-                <div>
-                  <div className="font-medium">Failed Login Attempts</div>
-                  <div className="text-sm text-gray-600">Created by security@slyyfox.com</div>
-                </div>
-                <div className="flex space-x-2">
-                  <button className="text-blue-600 hover:text-blue-800 text-sm">Run</button>
-                  <button className="text-red-600 hover:text-red-800 text-sm">Delete</button>
-                </div>
-              </div>
+            <div>
+              <h4 className="font-medium mb-2">Audit Trail for Audit Access</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Log all audit log access attempts</li>
+                <li>• Record search queries and filters used</li>
+                <li>• Track data exports and downloads</li>
+                <li>• Monitor unusual access patterns</li>
+                <li>• Alert on unauthorized access attempts</li>
+              </ul>
             </div>
+
+            <button className="bg-burnt-orange text-white px-4 py-2 rounded hover:bg-burnt-orange/90">
+              Update Access Control
+            </button>
           </div>
         </div>
       )}

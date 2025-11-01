@@ -1,84 +1,18 @@
 import { useState } from 'react'
 
 const AudioProcessing = () => {
-  const [activeTab, setActiveTab] = useState('library')
-
-  const processingStats = {
-    totalFiles: '12,847',
-    processingQueue: '23',
-    storageUsed: '2.4 TB',
-    monthlyPlays: '156K',
-    conversionRate: '98.7%'
-  }
-
-  const audioLibrary = [
-    { id: 1, filename: 'epic-orchestral-theme.mp3', title: 'Epic Orchestral Theme', artist: 'AudioMaster', duration: '3:45', size: '8.7 MB', format: 'MP3', status: 'Processed', uploadDate: '2024-01-15' },
-    { id: 2, filename: 'podcast-episode-001.wav', title: 'Startup Stories Episode 1', artist: 'TechTalk', duration: '45:23', size: '156 MB', format: 'WAV', status: 'Processing', uploadDate: '2024-01-15' },
-    { id: 3, filename: 'audiobook-chapter-1.m4a', title: 'Digital Marketing Guide Ch1', artist: 'BusinessBooks', duration: '28:12', size: '67 MB', format: 'M4A', status: 'Processed', uploadDate: '2024-01-14' },
-    { id: 4, filename: 'sound-effects-pack.zip', title: 'UI Sound Effects Pack', artist: 'SoundDesign', duration: '12:34', size: '23 MB', format: 'ZIP', status: 'Failed', uploadDate: '2024-01-14' }
-  ]
-
-  const processingQueue = [
-    { id: 1, filename: 'new-podcast-episode.wav', operation: 'Format Conversion', progress: 67, eta: '3 minutes', priority: 'High' },
-    { id: 2, filename: 'music-album-track-5.flac', operation: 'Waveform Generation', progress: 23, eta: '8 minutes', priority: 'Medium' },
-    { id: 3, filename: 'audiobook-chapter-12.mp3', operation: 'Transcription', progress: 89, eta: '1 minute', priority: 'Low' },
-    { id: 4, filename: 'sound-effect-explosion.wav', operation: 'Quality Optimization', progress: 45, eta: '5 minutes', priority: 'Medium' }
-  ]
-
-  const playerTemplates = [
-    { id: 1, name: 'Marketplace Player', type: 'Product Preview', features: ['Play/Pause', 'Progress Bar', 'Volume', 'Download'], usage: 1247 },
-    { id: 2, name: 'Podcast Player', type: 'Full Episode', features: ['Play/Pause', 'Progress Bar', 'Speed Control', 'Chapters'], usage: 567 },
-    { id: 3, name: 'Audiobook Player', type: 'Chapter Navigation', features: ['Play/Pause', 'Progress Bar', 'Bookmarks', 'Speed Control'], usage: 234 },
-    { id: 4, name: 'Music Player', type: 'Track Listing', features: ['Play/Pause', 'Progress Bar', 'Playlist', 'Repeat'], usage: 890 }
-  ]
-
-  const contentModeration = [
-    { id: 1, filename: 'suspicious-audio-file.mp3', issue: 'Potential Copyright Match', confidence: '87%', status: 'Under Review', flaggedDate: '2024-01-15' },
-    { id: 2, filename: 'podcast-explicit-content.wav', issue: 'Explicit Language Detected', confidence: '94%', status: 'Approved', flaggedDate: '2024-01-14' },
-    { id: 3, filename: 'music-track-sample.mp3', issue: 'Copyright Claim', confidence: '76%', status: 'Rejected', flaggedDate: '2024-01-13' },
-    { id: 4, filename: 'audiobook-narration.m4a', issue: 'Quality Issues', confidence: '65%', status: 'Pending', flaggedDate: '2024-01-12' }
-  ]
+  const [activeTab, setActiveTab] = useState('format-rules')
 
   return (
     <div className="space-y-6">
-      {/* Audio Processing Overview */}
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
-        <div className="bg-blue-50 p-6 rounded-lg border border-blue-200">
-          <h3 className="text-lg font-semibold text-blue-800">Total Files</h3>
-          <p className="text-3xl font-bold text-blue-600">{processingStats.totalFiles}</p>
-          <p className="text-sm text-blue-600">Audio files managed</p>
-        </div>
-        <div className="bg-yellow-50 p-6 rounded-lg border border-yellow-200">
-          <h3 className="text-lg font-semibold text-yellow-800">Processing Queue</h3>
-          <p className="text-3xl font-bold text-yellow-600">{processingStats.processingQueue}</p>
-          <p className="text-sm text-yellow-600">Files in queue</p>
-        </div>
-        <div className="bg-purple-50 p-6 rounded-lg border border-purple-200">
-          <h3 className="text-lg font-semibold text-purple-800">Storage Used</h3>
-          <p className="text-3xl font-bold text-purple-600">{processingStats.storageUsed}</p>
-          <p className="text-sm text-purple-600">Total audio storage</p>
-        </div>
-        <div className="bg-green-50 p-6 rounded-lg border border-green-200">
-          <h3 className="text-lg font-semibold text-green-800">Monthly Plays</h3>
-          <p className="text-3xl font-bold text-green-600">{processingStats.monthlyPlays}</p>
-          <p className="text-sm text-green-600">+23% from last month</p>
-        </div>
-        <div className="bg-orange-50 p-6 rounded-lg border border-orange-200">
-          <h3 className="text-lg font-semibold text-orange-800">Success Rate</h3>
-          <p className="text-3xl font-bold text-orange-600">{processingStats.conversionRate}</p>
-          <p className="text-sm text-orange-600">Processing success</p>
-        </div>
-      </div>
-
       {/* Tab Navigation */}
       <div className="border-b border-gray-200">
         <nav className="-mb-px flex space-x-8">
           {[
-            { id: 'library', label: 'Audio Library', icon: '🎵' },
-            { id: 'processing', label: 'Processing Queue', icon: '⚙️' },
-            { id: 'players', label: 'Player Templates', icon: '🎛️' },
-            { id: 'moderation', label: 'Content Moderation', icon: '🛡️' },
-            { id: 'settings', label: 'Processing Settings', icon: '🔧' }
+            { id: 'format-rules', label: 'Format Rules', icon: '🎵' },
+            { id: 'processing-rules', label: 'Processing Rules', icon: '⚙️' },
+            { id: 'player-config', label: 'Player Configuration', icon: '🎛️' },
+            { id: 'moderation-rules', label: 'Moderation Rules', icon: '🛡️' }
           ].map((tab) => (
             <button
               key={tab.id}
@@ -96,358 +30,312 @@ const AudioProcessing = () => {
         </nav>
       </div>
 
-      {/* Audio Library */}
-      {activeTab === 'library' && (
-        <div className="bg-white rounded-lg shadow border">
-          <div className="p-6 border-b border-gray-200">
-            <div className="flex justify-between items-center">
-              <h3 className="text-lg font-semibold">Audio File Library</h3>
-              <div className="flex space-x-2">
-                <select className="border border-gray-300 rounded px-3 py-1 text-sm">
-                  <option>All Formats</option>
-                  <option>MP3</option>
-                  <option>WAV</option>
-                  <option>M4A</option>
-                  <option>FLAC</option>
-                </select>
-                <select className="border border-gray-300 rounded px-3 py-1 text-sm">
-                  <option>All Status</option>
-                  <option>Processed</option>
-                  <option>Processing</option>
-                  <option>Failed</option>
-                </select>
+      {/* Format Rules */}
+      {activeTab === 'format-rules' && (
+        <div className="bg-white rounded-lg shadow border p-6">
+          <h3 className="text-lg font-semibold mb-4">Audio Format Configuration</h3>
+          
+          <div className="space-y-4">
+            <div>
+              <h4 className="font-medium mb-2">Supported Input Formats</h4>
+              <div className="grid grid-cols-4 gap-2 text-sm">
+                <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded">MP3</span>
+                <span className="px-3 py-1 bg-green-100 text-green-800 rounded">WAV</span>
+                <span className="px-3 py-1 bg-purple-100 text-purple-800 rounded">FLAC</span>
+                <span className="px-3 py-1 bg-orange-100 text-orange-800 rounded">M4A</span>
+                <span className="px-3 py-1 bg-red-100 text-red-800 rounded">AAC</span>
+                <span className="px-3 py-1 bg-gray-100 text-gray-800 rounded">OGG</span>
+                <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded">AIFF</span>
+                <span className="px-3 py-1 bg-pink-100 text-pink-800 rounded">WMA</span>
               </div>
             </div>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">File</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Title</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Artist</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Duration</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Format</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {audioLibrary.map((file) => (
-                  <tr key={file.id}>
-                    <td className="px-6 py-4 text-sm text-gray-900">
-                      <div className="flex items-center">
-                        <span className="mr-2">🎵</span>
-                        <div>
-                          <div className="font-medium">{file.filename}</div>
-                          <div className="text-xs text-gray-500">{file.size}</div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 text-sm text-gray-900">{file.title}</td>
-                    <td className="px-6 py-4 text-sm text-gray-900">{file.artist}</td>
-                    <td className="px-6 py-4 text-sm text-gray-900">{file.duration}</td>
-                    <td className="px-6 py-4">
-                      <span className={`px-2 py-1 text-xs rounded-full ${
-                        file.format === 'MP3' ? 'bg-blue-100 text-blue-800' :
-                        file.format === 'WAV' ? 'bg-green-100 text-green-800' :
-                        file.format === 'M4A' ? 'bg-purple-100 text-purple-800' :
-                        'bg-gray-100 text-gray-800'
-                      }`}>
-                        {file.format}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4">
-                      <span className={`px-2 py-1 text-xs rounded-full ${
-                        file.status === 'Processed' ? 'bg-green-100 text-green-800' :
-                        file.status === 'Processing' ? 'bg-yellow-100 text-yellow-800' :
-                        'bg-red-100 text-red-800'
-                      }`}>
-                        {file.status}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 text-sm space-x-2">
-                      <button className="text-blue-600 hover:text-blue-800">Play</button>
-                      <button className="text-green-600 hover:text-green-800">Generate Player</button>
-                      <button className="text-purple-600 hover:text-purple-800">Embed</button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )}
 
-      {/* Processing Queue */}
-      {activeTab === 'processing' && (
-        <div className="bg-white rounded-lg shadow border">
-          <div className="p-6 border-b border-gray-200">
-            <div className="flex justify-between items-center">
-              <h3 className="text-lg font-semibold">Audio Processing Queue</h3>
-              <div className="flex space-x-2">
-                <button className="border border-gray-300 px-4 py-2 rounded hover:bg-gray-50">
-                  Pause Queue
-                </button>
-                <button className="bg-burnt-orange text-white px-4 py-2 rounded hover:bg-burnt-orange/90">
-                  Process All
-                </button>
-              </div>
-            </div>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Filename</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Operation</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Progress</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">ETA</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Priority</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {processingQueue.map((job) => (
-                  <tr key={job.id}>
-                    <td className="px-6 py-4 text-sm text-gray-900">{job.filename}</td>
-                    <td className="px-6 py-4 text-sm text-gray-900">{job.operation}</td>
-                    <td className="px-6 py-4">
-                      <div className="flex items-center">
-                        <div className="w-16 bg-gray-200 rounded-full h-2 mr-2">
-                          <div 
-                            className="bg-burnt-orange h-2 rounded-full" 
-                            style={{ width: `${job.progress}%` }}
-                          ></div>
-                        </div>
-                        <span className="text-sm text-gray-600">{job.progress}%</span>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 text-sm text-gray-500">{job.eta}</td>
-                    <td className="px-6 py-4">
-                      <span className={`px-2 py-1 text-xs rounded-full ${
-                        job.priority === 'High' ? 'bg-red-100 text-red-800' :
-                        job.priority === 'Medium' ? 'bg-yellow-100 text-yellow-800' :
-                        'bg-green-100 text-green-800'
-                      }`}>
-                        {job.priority}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 text-sm space-x-2">
-                      <button className="text-blue-600 hover:text-blue-800">Prioritize</button>
-                      <button className="text-red-600 hover:text-red-800">Cancel</button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )}
-
-      {/* Player Templates */}
-      {activeTab === 'players' && (
-        <div className="space-y-6">
-          <div className="bg-white rounded-lg shadow border p-6">
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-semibold">Audio Player Templates</h3>
-              <button className="bg-burnt-orange text-white px-4 py-2 rounded hover:bg-burnt-orange/90">
-                Create Template
-              </button>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {playerTemplates.map((template) => (
-                <div key={template.id} className="border border-gray-200 rounded-lg p-4">
-                  <div className="flex justify-between items-start mb-3">
-                    <div>
-                      <h4 className="font-medium text-gray-900">{template.name}</h4>
-                      <p className="text-sm text-gray-600">{template.type}</p>
-                    </div>
-                    <span className="text-sm text-gray-500">{template.usage} uses</span>
-                  </div>
-                  <div className="mb-3">
-                    <p className="text-sm text-gray-600 mb-2">Features:</p>
-                    <div className="flex flex-wrap gap-1">
-                      {template.features.map((feature, index) => (
-                        <span key={index} className="px-2 py-1 text-xs bg-gray-100 text-gray-800 rounded">
-                          {feature}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="flex space-x-2">
-                    <button className="flex-1 text-blue-600 hover:text-blue-800 text-sm">Preview</button>
-                    <button className="flex-1 text-green-600 hover:text-green-800 text-sm">Edit</button>
-                    <button className="flex-1 text-purple-600 hover:text-purple-800 text-sm">Generate Code</button>
-                  </div>
+            <div>
+              <h4 className="font-medium mb-2">Output Format Standards</h4>
+              <div className="space-y-2">
+                <div className="border rounded p-3">
+                  <h5 className="font-medium text-blue-800">Marketplace Preview</h5>
+                  <ul className="text-sm text-gray-600 mt-1 space-y-1">
+                    <li>• Format: MP3 320kbps</li>
+                    <li>• Duration: 30-second preview</li>
+                    <li>• Sample rate: 44.1kHz</li>
+                    <li>• Channels: Stereo</li>
+                  </ul>
                 </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="bg-white rounded-lg shadow border p-6">
-            <h3 className="text-lg font-semibold mb-4">Player Customization</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Primary Color</label>
-                <div className="flex items-center space-x-2">
-                  <input type="color" value="#ea580c" className="w-12 h-8 border border-gray-300 rounded" />
-                  <span className="text-sm text-gray-600">Burnt Orange (#ea580c)</span>
+                <div className="border rounded p-3">
+                  <h5 className="font-medium text-green-800">Full Download</h5>
+                  <ul className="text-sm text-gray-600 mt-1 space-y-1">
+                    <li>• Format: Original + MP3 320kbps</li>
+                    <li>• Quality: Lossless preservation</li>
+                    <li>• Metadata: ID3v2.4 tags</li>
+                    <li>• Artwork: Embedded 1400x1400px</li>
+                  </ul>
+                </div>
+                <div className="border rounded p-3">
+                  <h5 className="font-medium text-purple-800">Streaming</h5>
+                  <ul className="text-sm text-gray-600 mt-1 space-y-1">
+                    <li>• Format: AAC 256kbps</li>
+                    <li>• Adaptive bitrate: 128/256/320kbps</li>
+                    <li>• Segmented for HLS delivery</li>
+                    <li>• CDN optimized</li>
+                  </ul>
                 </div>
               </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Background Color</label>
-                <div className="flex items-center space-x-2">
-                  <input type="color" value="#000000" className="w-12 h-8 border border-gray-300 rounded" />
-                  <span className="text-sm text-gray-600">Black (#000000)</span>
+            </div>
+
+            <div>
+              <h4 className="font-medium mb-2">File Size Limits</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Maximum upload size: 500MB per file</li>
+                <li>• Minimum duration: 5 seconds</li>
+                <li>• Maximum duration: 3 hours</li>
+                <li>• Batch upload limit: 50 files</li>
+                <li>• Total user storage: 10GB (standard), 100GB (premium)</li>
+              </ul>
+            </div>
+
+            <button className="bg-burnt-orange text-white px-4 py-2 rounded hover:bg-burnt-orange/90">
+              Update Format Rules
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Processing Rules */}
+      {activeTab === 'processing-rules' && (
+        <div className="bg-white rounded-lg shadow border p-6">
+          <h3 className="text-lg font-semibold mb-4">Audio Processing Configuration</h3>
+          
+          <div className="space-y-4">
+            <div>
+              <h4 className="font-medium mb-2">Automatic Processing Pipeline</h4>
+              <div className="space-y-2">
+                <div className="border rounded p-3">
+                  <h5 className="font-medium">Upload Processing (Immediate)</h5>
+                  <ul className="text-sm text-gray-600 mt-1 space-y-1">
+                    <li>• File format validation and conversion</li>
+                    <li>• Audio quality analysis</li>
+                    <li>• Metadata extraction and normalization</li>
+                    <li>• Waveform generation</li>
+                    <li>• Preview clip creation (30s)</li>
+                  </ul>
+                </div>
+                <div className="border rounded p-3">
+                  <h5 className="font-medium">Background Processing (Queue)</h5>
+                  <ul className="text-sm text-gray-600 mt-1 space-y-1">
+                    <li>• Audio fingerprinting for copyright detection</li>
+                    <li>• Transcription generation (speech content)</li>
+                    <li>• Multiple format encoding</li>
+                    <li>• CDN distribution</li>
+                    <li>• Search index updates</li>
+                  </ul>
                 </div>
               </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Player Height</label>
-                <select className="w-full border border-gray-300 rounded px-3 py-2">
-                  <option>Compact (60px)</option>
-                  <option>Standard (80px)</option>
-                  <option>Large (120px)</option>
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Auto-play</label>
-                <label className="relative inline-flex items-center cursor-pointer">
-                  <input type="checkbox" className="sr-only peer" />
-                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-burnt-orange"></div>
-                </label>
-              </div>
             </div>
+
+            <div>
+              <h4 className="font-medium mb-2">Processing Priority Rules</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Premium users → High priority queue</li>
+                <li>• Commercial licenses → High priority</li>
+                <li>• Large files (100MB+) → Low priority queue</li>
+                <li>• Batch uploads → Background processing</li>
+                <li>• Re-processing requests → Medium priority</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-medium mb-2">Quality Control Standards</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Minimum sample rate: 44.1kHz</li>
+                <li>• Minimum bit depth: 16-bit</li>
+                <li>• Audio level normalization: -23 LUFS</li>
+                <li>• Peak limiting: -1dBFS maximum</li>
+                <li>• Silence detection: Remove leading/trailing silence</li>
+                <li>• Clipping detection: Flag distorted audio</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-medium mb-2">Processing Timeouts</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Format conversion: 5 minutes per 100MB</li>
+                <li>• Waveform generation: 2 minutes per file</li>
+                <li>• Copyright scanning: 10 minutes per file</li>
+                <li>• Transcription: 15 minutes per hour of audio</li>
+                <li>• Total processing timeout: 30 minutes</li>
+              </ul>
+            </div>
+
+            <button className="bg-burnt-orange text-white px-4 py-2 rounded hover:bg-burnt-orange/90">
+              Update Processing Rules
+            </button>
           </div>
         </div>
       )}
 
-      {/* Content Moderation */}
-      {activeTab === 'moderation' && (
-        <div className="bg-white rounded-lg shadow border">
-          <div className="p-6 border-b border-gray-200">
-            <h3 className="text-lg font-semibold">Audio Content Moderation</h3>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Filename</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Issue</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Confidence</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Flagged Date</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {contentModeration.map((item) => (
-                  <tr key={item.id}>
-                    <td className="px-6 py-4 text-sm text-gray-900">{item.filename}</td>
-                    <td className="px-6 py-4 text-sm text-gray-900">{item.issue}</td>
-                    <td className="px-6 py-4 text-sm text-gray-900">{item.confidence}</td>
-                    <td className="px-6 py-4">
-                      <span className={`px-2 py-1 text-xs rounded-full ${
-                        item.status === 'Approved' ? 'bg-green-100 text-green-800' :
-                        item.status === 'Rejected' ? 'bg-red-100 text-red-800' :
-                        item.status === 'Under Review' ? 'bg-yellow-100 text-yellow-800' :
-                        'bg-blue-100 text-blue-800'
-                      }`}>
-                        {item.status}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 text-sm text-gray-500">{item.flaggedDate}</td>
-                    <td className="px-6 py-4 text-sm space-x-2">
-                      <button className="text-green-600 hover:text-green-800">Approve</button>
-                      <button className="text-red-600 hover:text-red-800">Reject</button>
-                      <button className="text-blue-600 hover:text-blue-800">Review</button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+      {/* Player Configuration */}
+      {activeTab === 'player-config' && (
+        <div className="bg-white rounded-lg shadow border p-6">
+          <h3 className="text-lg font-semibold mb-4">Audio Player Configuration</h3>
+          
+          <div className="space-y-4">
+            <div>
+              <h4 className="font-medium mb-2">Player Template Types</h4>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="border rounded p-3">
+                  <h5 className="font-medium text-blue-800">Marketplace Player</h5>
+                  <ul className="text-sm text-gray-600 mt-1 space-y-1">
+                    <li>• 30-second preview only</li>
+                    <li>• Play/pause, progress bar</li>
+                    <li>• Volume control</li>
+                    <li>• Download button (licensed users)</li>
+                    <li>• Waveform visualization</li>
+                  </ul>
+                </div>
+                <div className="border rounded p-3">
+                  <h5 className="font-medium text-green-800">Full Player</h5>
+                  <ul className="text-sm text-gray-600 mt-1 space-y-1">
+                    <li>• Complete track playback</li>
+                    <li>• Speed control (0.5x - 2x)</li>
+                    <li>• Loop and repeat options</li>
+                    <li>• Playlist support</li>
+                    <li>• Keyboard shortcuts</li>
+                  </ul>
+                </div>
+                <div className="border rounded p-3">
+                  <h5 className="font-medium text-purple-800">Podcast Player</h5>
+                  <ul className="text-sm text-gray-600 mt-1 space-y-1">
+                    <li>• Chapter navigation</li>
+                    <li>• Bookmark functionality</li>
+                    <li>• Transcript display</li>
+                    <li>• Skip intro/outro</li>
+                    <li>• Episode queue</li>
+                  </ul>
+                </div>
+                <div className="border rounded p-3">
+                  <h5 className="font-medium text-orange-800">Embedded Player</h5>
+                  <ul className="text-sm text-gray-600 mt-1 space-y-1">
+                    <li>• Minimal interface</li>
+                    <li>• Customizable colors</li>
+                    <li>• Responsive design</li>
+                    <li>• Auto-play options</li>
+                    <li>• Social sharing</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h4 className="font-medium mb-2">Player Customization Rules</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Brand colors: Burnt orange (#ea580c) and black (#000000)</li>
+                <li>• Player heights: Compact (60px), Standard (80px), Large (120px)</li>
+                <li>• Auto-play disabled by default (user privacy)</li>
+                <li>• Volume defaults to 70% for user comfort</li>
+                <li>• Progress bar shows time remaining by default</li>
+                <li>• Waveform visualization optional (performance impact)</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-medium mb-2">Embed Code Standards</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Responsive iframe implementation</li>
+                <li>• HTTPS required for all embeds</li>
+                <li>• CSP-compliant code generation</li>
+                <li>• Lazy loading for performance</li>
+                <li>• Analytics tracking included</li>
+                <li>• Fallback for unsupported browsers</li>
+              </ul>
+            </div>
+
+            <button className="bg-burnt-orange text-white px-4 py-2 rounded hover:bg-burnt-orange/90">
+              Update Player Configuration
+            </button>
           </div>
         </div>
       )}
 
-      {/* Processing Settings */}
-      {activeTab === 'settings' && (
-        <div className="space-y-6">
-          <div className="bg-white rounded-lg shadow border p-6">
-            <h3 className="text-lg font-semibold mb-4">Audio Processing Configuration</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Default Output Format</label>
-                <select className="w-full border border-gray-300 rounded px-3 py-2">
-                  <option>MP3 (320kbps)</option>
-                  <option>MP3 (256kbps)</option>
-                  <option>MP3 (128kbps)</option>
-                  <option>AAC (256kbps)</option>
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Preview Length</label>
-                <select className="w-full border border-gray-300 rounded px-3 py-2">
-                  <option>30 seconds</option>
-                  <option>60 seconds</option>
-                  <option>90 seconds</option>
-                  <option>Full track</option>
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Auto-generate Waveforms</label>
-                <label className="relative inline-flex items-center cursor-pointer">
-                  <input type="checkbox" className="sr-only peer" defaultChecked />
-                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-burnt-orange"></div>
-                </label>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Copyright Detection</label>
-                <label className="relative inline-flex items-center cursor-pointer">
-                  <input type="checkbox" className="sr-only peer" defaultChecked />
-                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-burnt-orange"></div>
-                </label>
+      {/* Moderation Rules */}
+      {activeTab === 'moderation-rules' && (
+        <div className="bg-white rounded-lg shadow border p-6">
+          <h3 className="text-lg font-semibold mb-4">Audio Content Moderation Rules</h3>
+          
+          <div className="space-y-4">
+            <div>
+              <h4 className="font-medium mb-2">Automated Detection Systems</h4>
+              <div className="space-y-2">
+                <div className="border rounded p-3">
+                  <h5 className="font-medium text-red-800">Copyright Detection</h5>
+                  <ul className="text-sm text-gray-600 mt-1 space-y-1">
+                    <li>• Audio fingerprinting against known databases</li>
+                    <li>• Confidence threshold: 85% for auto-flag</li>
+                    <li>• Manual review required for 70-85% matches</li>
+                    <li>• Automatic rejection for 95%+ matches</li>
+                  </ul>
+                </div>
+                <div className="border rounded p-3">
+                  <h5 className="font-medium text-orange-800">Content Analysis</h5>
+                  <ul className="text-sm text-gray-600 mt-1 space-y-1">
+                    <li>• Speech-to-text for explicit language detection</li>
+                    <li>• Audio quality assessment</li>
+                    <li>• Silence/noise ratio analysis</li>
+                    <li>• Volume level consistency check</li>
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className="bg-white rounded-lg shadow border p-6">
-            <h3 className="text-lg font-semibold mb-4">Storage & CDN Settings</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Storage Location</label>
-                <select className="w-full border border-gray-300 rounded px-3 py-2">
-                  <option>S3 US-East-1</option>
-                  <option>S3 US-West-2</option>
-                  <option>S3 EU-West-1</option>
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">CDN Distribution</label>
-                <label className="relative inline-flex items-center cursor-pointer">
-                  <input type="checkbox" className="sr-only peer" defaultChecked />
-                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-burnt-orange"></div>
-                </label>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Max File Size</label>
-                <select className="w-full border border-gray-300 rounded px-3 py-2">
-                  <option>100 MB</option>
-                  <option>250 MB</option>
-                  <option>500 MB</option>
-                  <option>1 GB</option>
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Backup Retention</label>
-                <select className="w-full border border-gray-300 rounded px-3 py-2">
-                  <option>30 days</option>
-                  <option>90 days</option>
-                  <option>1 year</option>
-                  <option>Permanent</option>
-                </select>
-              </div>
+            <div>
+              <h4 className="font-medium mb-2">Content Approval Workflow</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Auto-approve: Clean audio with no flags</li>
+                <li>• Manual review: Flagged content (24-48 hour SLA)</li>
+                <li>• Escalation: Complex cases to senior moderators</li>
+                <li>• Appeal process: 7-day window for rejected content</li>
+                <li>• Repeat offenders: Account restrictions applied</li>
+              </ul>
             </div>
+
+            <div>
+              <h4 className="font-medium mb-2">Prohibited Content Types</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Copyrighted material without proper licensing</li>
+                <li>• Hate speech or discriminatory content</li>
+                <li>• Explicit sexual content</li>
+                <li>• Violence or harmful instructions</li>
+                <li>• Spam or low-quality recordings</li>
+                <li>• Misleading or fraudulent content</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-medium mb-2">Quality Standards</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Minimum audio quality: 128kbps equivalent</li>
+                <li>• Maximum background noise: -40dB</li>
+                <li>• Minimum content duration: 5 seconds</li>
+                <li>• No excessive silence (10%+ of track)</li>
+                <li>• Clear audio without distortion</li>
+                <li>• Proper metadata required (title, description)</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-medium mb-2">Moderation Actions</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Warning: First-time minor violations</li>
+                <li>• Content removal: Policy violations</li>
+                <li>• Account suspension: Repeat violations (7-30 days)</li>
+                <li>• Permanent ban: Severe or repeated violations</li>
+                <li>• DMCA takedown: Copyright infringement</li>
+              </ul>
+            </div>
+
+            <button className="bg-burnt-orange text-white px-4 py-2 rounded hover:bg-burnt-orange/90">
+              Update Moderation Rules
+            </button>
           </div>
         </div>
       )}

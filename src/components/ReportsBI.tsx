@@ -1,82 +1,18 @@
 import { useState } from 'react'
 
 const ReportsBI = () => {
-  const [activeTab, setActiveTab] = useState('executive')
-
-  const executiveMetrics = {
-    totalRevenue: '$2.4M',
-    monthlyGrowth: '+18.5%',
-    activeUsers: '45,672',
-    userGrowth: '+12.3%',
-    totalSellers: '3,247',
-    sellerGrowth: '+8.7%',
-    avgOrderValue: '$127.50',
-    conversionRate: '3.2%'
-  }
-
-  const revenueBreakdown = [
-    { source: 'Marketplace Sales', amount: '$1,847,230', percentage: 77, growth: '+15.2%' },
-    { source: 'Licensing Fees', amount: '$342,150', percentage: 14, growth: '+22.8%' },
-    { source: 'Subscriptions', amount: '$156,890', percentage: 7, growth: '+31.4%' },
-    { source: 'Premium Features', amount: '$53,730', percentage: 2, growth: '+45.1%' }
-  ]
-
-  const topProducts = [
-    { name: 'Audio Production Pack', sales: 1247, revenue: '$156,875', category: 'Audio' },
-    { name: 'Digital Art Bundle', sales: 892, revenue: '$89,200', category: 'Visual' },
-    { name: 'Web Template Collection', sales: 634, revenue: '$63,400', category: 'Web' },
-    { name: '3D Model Library', sales: 445, revenue: '$66,750', category: '3D' }
-  ]
-
-  const scheduledReports = [
-    { name: 'Daily Revenue Summary', frequency: 'Daily', recipients: 'executives@slyyfox.com', lastSent: '2024-01-15 09:00' },
-    { name: 'Weekly Seller Performance', frequency: 'Weekly', recipients: 'sales@slyyfox.com', lastSent: '2024-01-14 08:00' },
-    { name: 'Monthly Financial Report', frequency: 'Monthly', recipients: 'finance@slyyfox.com', lastSent: '2024-01-01 10:00' },
-    { name: 'Quarterly Business Review', frequency: 'Quarterly', recipients: 'board@slyyfox.com', lastSent: '2024-01-01 12:00' }
-  ]
-
-  const customDashboards = [
-    { name: 'Executive Overview', owner: 'CEO', lastAccessed: '2024-01-15', widgets: 12 },
-    { name: 'Sales Performance', owner: 'Sales Team', lastAccessed: '2024-01-15', widgets: 8 },
-    { name: 'Product Analytics', owner: 'Product Team', lastAccessed: '2024-01-14', widgets: 15 },
-    { name: 'Financial Metrics', owner: 'CFO', lastAccessed: '2024-01-13', widgets: 10 }
-  ]
+  const [activeTab, setActiveTab] = useState('report-rules')
 
   return (
     <div className="space-y-6">
-      {/* BI Overview Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <div className="bg-green-50 p-6 rounded-lg border border-green-200">
-          <h3 className="text-lg font-semibold text-green-800">Total Revenue</h3>
-          <p className="text-3xl font-bold text-green-600">{executiveMetrics.totalRevenue}</p>
-          <p className="text-sm text-green-600">{executiveMetrics.monthlyGrowth} this month</p>
-        </div>
-        <div className="bg-blue-50 p-6 rounded-lg border border-blue-200">
-          <h3 className="text-lg font-semibold text-blue-800">Active Users</h3>
-          <p className="text-3xl font-bold text-blue-600">{executiveMetrics.activeUsers}</p>
-          <p className="text-sm text-blue-600">{executiveMetrics.userGrowth} growth</p>
-        </div>
-        <div className="bg-purple-50 p-6 rounded-lg border border-purple-200">
-          <h3 className="text-lg font-semibold text-purple-800">Active Sellers</h3>
-          <p className="text-3xl font-bold text-purple-600">{executiveMetrics.totalSellers}</p>
-          <p className="text-sm text-purple-600">{executiveMetrics.sellerGrowth} growth</p>
-        </div>
-        <div className="bg-orange-50 p-6 rounded-lg border border-orange-200">
-          <h3 className="text-lg font-semibold text-orange-800">Avg Order Value</h3>
-          <p className="text-3xl font-bold text-orange-600">{executiveMetrics.avgOrderValue}</p>
-          <p className="text-sm text-orange-600">{executiveMetrics.conversionRate} conversion</p>
-        </div>
-      </div>
-
       {/* Tab Navigation */}
       <div className="border-b border-gray-200">
         <nav className="-mb-px flex space-x-8">
           {[
-            { id: 'executive', label: 'Executive Dashboard', icon: '👔' },
-            { id: 'revenue', label: 'Revenue Analysis', icon: '💰' },
-            { id: 'products', label: 'Product Performance', icon: '📦' },
-            { id: 'reports', label: 'Scheduled Reports', icon: '📅' },
-            { id: 'dashboards', label: 'Custom Dashboards', icon: '📊' }
+            { id: 'report-rules', label: 'Report Rules', icon: '📋' },
+            { id: 'dashboard-config', label: 'Dashboard Config', icon: '📊' },
+            { id: 'data-access', label: 'Data Access', icon: '🔐' },
+            { id: 'export-rules', label: 'Export Rules', icon: '📤' }
           ].map((tab) => (
             <button
               key={tab.id}
@@ -94,269 +30,258 @@ const ReportsBI = () => {
         </nav>
       </div>
 
-      {/* Executive Dashboard */}
-      {activeTab === 'executive' && (
-        <div className="space-y-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="bg-white rounded-lg shadow border p-6">
-              <h3 className="text-lg font-semibold mb-4">Revenue Trend (Last 12 Months)</h3>
-              <div className="h-64 flex items-center justify-center text-gray-500">
-                [Revenue Trend Chart Placeholder]
-              </div>
-            </div>
-            <div className="bg-white rounded-lg shadow border p-6">
-              <h3 className="text-lg font-semibold mb-4">User Growth & Retention</h3>
-              <div className="h-64 flex items-center justify-center text-gray-500">
-                [User Growth Chart Placeholder]
-              </div>
-            </div>
-          </div>
+      {/* Report Rules */}
+      {activeTab === 'report-rules' && (
+        <div className="bg-white rounded-lg shadow border p-6">
+          <h3 className="text-lg font-semibold mb-4">Automated Report Configuration</h3>
           
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="bg-white rounded-lg shadow border p-6">
-              <h3 className="text-lg font-semibold mb-4">Geographic Distribution</h3>
-              <div className="h-48 flex items-center justify-center text-gray-500">
-                [World Map Placeholder]
-              </div>
-            </div>
-            <div className="bg-white rounded-lg shadow border p-6">
-              <h3 className="text-lg font-semibold mb-4">Key Performance Indicators</h3>
-              <div className="space-y-4">
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-600">Customer Acquisition Cost</span>
-                  <span className="font-semibold">$23.50</span>
+          <div className="space-y-4">
+            <div>
+              <h4 className="font-medium mb-2">Available Report Types</h4>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="border rounded p-3">
+                  <h5 className="font-medium">Financial Reports</h5>
+                  <ul className="text-sm text-gray-600 mt-1 space-y-1">
+                    <li>• Daily revenue summary</li>
+                    <li>• Monthly financial statement</li>
+                    <li>• Quarterly business review</li>
+                    <li>• Annual tax report</li>
+                  </ul>
                 </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-600">Customer Lifetime Value</span>
-                  <span className="font-semibold">$847.30</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-600">Monthly Churn Rate</span>
-                  <span className="font-semibold">2.1%</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-600">Net Promoter Score</span>
-                  <span className="font-semibold">72</span>
+                <div className="border rounded p-3">
+                  <h5 className="font-medium">Performance Reports</h5>
+                  <ul className="text-sm text-gray-600 mt-1 space-y-1">
+                    <li>• User engagement metrics</li>
+                    <li>• Seller performance analysis</li>
+                    <li>• Product category trends</li>
+                    <li>• Platform health status</li>
+                  </ul>
                 </div>
               </div>
             </div>
+
+            <div>
+              <h4 className="font-medium mb-2">Report Frequency Rules</h4>
+              <div className="grid grid-cols-4 gap-2 text-sm">
+                <span className="px-3 py-1 bg-green-100 text-green-800 rounded">Daily (9:00 AM)</span>
+                <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded">Weekly (Monday 8:00 AM)</span>
+                <span className="px-3 py-1 bg-purple-100 text-purple-800 rounded">Monthly (1st, 10:00 AM)</span>
+                <span className="px-3 py-1 bg-orange-100 text-orange-800 rounded">Quarterly (1st, 12:00 PM)</span>
+              </div>
+            </div>
+
+            <div>
+              <h4 className="font-medium mb-2">Report Distribution Rules</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Executive reports → C-level executives only</li>
+                <li>• Financial reports → Finance team + CEO + CFO</li>
+                <li>• Performance reports → Department heads + managers</li>
+                <li>• Compliance reports → Legal team + compliance officer</li>
+                <li>• All reports → Archived in secure document storage</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-medium mb-2">Report Format Requirements</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• PDF format for executive summaries</li>
+                <li>• Excel format for detailed financial data</li>
+                <li>• CSV format for raw data exports</li>
+                <li>• Interactive dashboards for real-time metrics</li>
+                <li>• Email notifications for critical alerts</li>
+              </ul>
+            </div>
+
+            <button className="bg-burnt-orange text-white px-4 py-2 rounded hover:bg-burnt-orange/90">
+              Update Report Rules
+            </button>
           </div>
         </div>
       )}
 
-      {/* Revenue Analysis */}
-      {activeTab === 'revenue' && (
-        <div className="space-y-6">
-          <div className="bg-white rounded-lg shadow border p-6">
-            <h3 className="text-lg font-semibold mb-4">Revenue Breakdown by Source</h3>
-            <div className="space-y-4">
-              {revenueBreakdown.map((item, index) => (
-                <div key={index} className="flex items-center justify-between">
-                  <div className="flex-1">
-                    <div className="flex justify-between items-center mb-1">
-                      <span className="font-medium">{item.source}</span>
-                      <span className="text-sm text-gray-600">{item.amount}</span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div 
-                        className="bg-burnt-orange h-2 rounded-full" 
-                        style={{ width: `${item.percentage}%` }}
-                      ></div>
-                    </div>
-                  </div>
-                  <div className="ml-4 text-right">
-                    <div className="text-sm font-medium">{item.percentage}%</div>
-                    <div className="text-xs text-green-600">{item.growth}</div>
-                  </div>
+      {/* Dashboard Config */}
+      {activeTab === 'dashboard-config' && (
+        <div className="bg-white rounded-lg shadow border p-6">
+          <h3 className="text-lg font-semibold mb-4">Dashboard Configuration Rules</h3>
+          
+          <div className="space-y-4">
+            <div>
+              <h4 className="font-medium mb-2">Available Dashboard Templates</h4>
+              <div className="grid grid-cols-3 gap-4">
+                <div className="border rounded p-3 text-center">
+                  <div className="text-2xl mb-2">👔</div>
+                  <h5 className="font-medium">Executive Overview</h5>
+                  <p className="text-sm text-gray-600">High-level KPIs and strategic metrics</p>
                 </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="bg-white rounded-lg shadow border p-6">
-              <h3 className="text-lg font-semibold mb-4">Monthly Recurring Revenue</h3>
-              <div className="h-48 flex items-center justify-center text-gray-500">
-                [MRR Chart Placeholder]
-              </div>
-            </div>
-            <div className="bg-white rounded-lg shadow border p-6">
-              <h3 className="text-lg font-semibold mb-4">Revenue Forecast</h3>
-              <div className="h-48 flex items-center justify-center text-gray-500">
-                [Forecast Chart Placeholder]
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Product Performance */}
-      {activeTab === 'products' && (
-        <div className="space-y-6">
-          <div className="bg-white rounded-lg shadow border">
-            <div className="p-6 border-b border-gray-200">
-              <h3 className="text-lg font-semibold">Top Performing Products</h3>
-            </div>
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Product Name</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Category</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Sales</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Revenue</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Avg Price</th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {topProducts.map((product, index) => (
-                    <tr key={index}>
-                      <td className="px-6 py-4 text-sm font-medium text-gray-900">{product.name}</td>
-                      <td className="px-6 py-4">
-                        <span className={`px-2 py-1 text-xs rounded-full ${
-                          product.category === 'Audio' ? 'bg-blue-100 text-blue-800' :
-                          product.category === 'Visual' ? 'bg-green-100 text-green-800' :
-                          product.category === 'Web' ? 'bg-purple-100 text-purple-800' :
-                          'bg-orange-100 text-orange-800'
-                        }`}>
-                          {product.category}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 text-sm text-gray-900">{product.sales.toLocaleString()}</td>
-                      <td className="px-6 py-4 text-sm text-gray-900">{product.revenue}</td>
-                      <td className="px-6 py-4 text-sm text-gray-900">
-                        ${(parseInt(product.revenue.replace(/[$,]/g, '')) / product.sales).toFixed(2)}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="bg-white rounded-lg shadow border p-6">
-              <h3 className="text-lg font-semibold mb-4">Category Performance</h3>
-              <div className="h-48 flex items-center justify-center text-gray-500">
-                [Category Performance Chart Placeholder]
-              </div>
-            </div>
-            <div className="bg-white rounded-lg shadow border p-6">
-              <h3 className="text-lg font-semibold mb-4">Seller Performance Distribution</h3>
-              <div className="h-48 flex items-center justify-center text-gray-500">
-                [Seller Distribution Chart Placeholder]
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Scheduled Reports */}
-      {activeTab === 'reports' && (
-        <div className="bg-white rounded-lg shadow border">
-          <div className="p-6 border-b border-gray-200">
-            <div className="flex justify-between items-center">
-              <h3 className="text-lg font-semibold">Automated Reports</h3>
-              <button className="bg-burnt-orange text-white px-4 py-2 rounded hover:bg-burnt-orange/90">
-                Create Report
-              </button>
-            </div>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Report Name</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Frequency</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Recipients</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Last Sent</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {scheduledReports.map((report, index) => (
-                  <tr key={index}>
-                    <td className="px-6 py-4 text-sm font-medium text-gray-900">{report.name}</td>
-                    <td className="px-6 py-4">
-                      <span className={`px-2 py-1 text-xs rounded-full ${
-                        report.frequency === 'Daily' ? 'bg-green-100 text-green-800' :
-                        report.frequency === 'Weekly' ? 'bg-blue-100 text-blue-800' :
-                        report.frequency === 'Monthly' ? 'bg-purple-100 text-purple-800' :
-                        'bg-orange-100 text-orange-800'
-                      }`}>
-                        {report.frequency}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 text-sm text-gray-900">{report.recipients}</td>
-                    <td className="px-6 py-4 text-sm text-gray-500">{report.lastSent}</td>
-                    <td className="px-6 py-4 text-sm space-x-2">
-                      <button className="text-blue-600 hover:text-blue-800">Edit</button>
-                      <button className="text-green-600 hover:text-green-800">Send Now</button>
-                      <button className="text-red-600 hover:text-red-800">Disable</button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )}
-
-      {/* Custom Dashboards */}
-      {activeTab === 'dashboards' && (
-        <div className="space-y-6">
-          <div className="bg-white rounded-lg shadow border">
-            <div className="p-6 border-b border-gray-200">
-              <div className="flex justify-between items-center">
-                <h3 className="text-lg font-semibold">Custom Dashboards</h3>
-                <button className="bg-burnt-orange text-white px-4 py-2 rounded hover:bg-burnt-orange/90">
-                  Create Dashboard
-                </button>
-              </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-6">
-              {customDashboards.map((dashboard, index) => (
-                <div key={index} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
-                  <div className="flex items-center justify-between mb-3">
-                    <h4 className="font-medium text-gray-900">{dashboard.name}</h4>
-                    <span className="text-2xl">📊</span>
-                  </div>
-                  <div className="text-sm text-gray-600 space-y-1">
-                    <div>Owner: {dashboard.owner}</div>
-                    <div>Widgets: {dashboard.widgets}</div>
-                    <div>Last accessed: {dashboard.lastAccessed}</div>
-                  </div>
-                  <div className="mt-4 flex space-x-2">
-                    <button className="flex-1 text-blue-600 hover:text-blue-800 text-sm">View</button>
-                    <button className="flex-1 text-green-600 hover:text-green-800 text-sm">Edit</button>
-                  </div>
+                <div className="border rounded p-3 text-center">
+                  <div className="text-2xl mb-2">💰</div>
+                  <h5 className="font-medium">Financial Dashboard</h5>
+                  <p className="text-sm text-gray-600">Revenue, costs, and financial health</p>
                 </div>
-              ))}
+                <div className="border rounded p-3 text-center">
+                  <div className="text-2xl mb-2">📈</div>
+                  <h5 className="font-medium">Operations Dashboard</h5>
+                  <p className="text-sm text-gray-600">Platform performance and user metrics</p>
+                </div>
+              </div>
             </div>
-          </div>
 
-          <div className="bg-white rounded-lg shadow border p-6">
-            <h3 className="text-lg font-semibold mb-4">Dashboard Templates</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="border border-gray-200 rounded-lg p-4 text-center">
-                <div className="text-3xl mb-2">👔</div>
-                <div className="font-medium">Executive Overview</div>
-                <div className="text-sm text-gray-600">High-level KPIs and metrics</div>
-                <button className="mt-2 text-blue-600 hover:text-blue-800 text-sm">Use Template</button>
-              </div>
-              <div className="border border-gray-200 rounded-lg p-4 text-center">
-                <div className="text-3xl mb-2">💰</div>
-                <div className="font-medium">Financial Dashboard</div>
-                <div className="text-sm text-gray-600">Revenue and financial metrics</div>
-                <button className="mt-2 text-blue-600 hover:text-blue-800 text-sm">Use Template</button>
-              </div>
-              <div className="border border-gray-200 rounded-lg p-4 text-center">
-                <div className="text-3xl mb-2">📈</div>
-                <div className="font-medium">Marketing Analytics</div>
-                <div className="text-sm text-gray-600">Campaign and conversion metrics</div>
-                <button className="mt-2 text-blue-600 hover:text-blue-800 text-sm">Use Template</button>
+            <div>
+              <h4 className="font-medium mb-2">Widget Categories</h4>
+              <div className="grid grid-cols-2 gap-2 text-sm">
+                <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded">Revenue Metrics</span>
+                <span className="px-3 py-1 bg-green-100 text-green-800 rounded">User Analytics</span>
+                <span className="px-3 py-1 bg-purple-100 text-purple-800 rounded">Performance KPIs</span>
+                <span className="px-3 py-1 bg-orange-100 text-orange-800 rounded">Growth Indicators</span>
+                <span className="px-3 py-1 bg-red-100 text-red-800 rounded">Alert Monitors</span>
+                <span className="px-3 py-1 bg-gray-100 text-gray-800 rounded">Custom Charts</span>
               </div>
             </div>
+
+            <div>
+              <h4 className="font-medium mb-2">Dashboard Access Rules</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Executive dashboards → C-level access only</li>
+                <li>• Department dashboards → Department heads + team members</li>
+                <li>• Personal dashboards → Individual user access</li>
+                <li>• Public dashboards → All authenticated users</li>
+                <li>• Guest dashboards → Limited read-only access</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-medium mb-2">Refresh Rate Rules</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Real-time widgets → 30-second refresh</li>
+                <li>• Financial widgets → 15-minute refresh</li>
+                <li>• Performance widgets → 5-minute refresh</li>
+                <li>• Historical widgets → Daily refresh</li>
+                <li>• Static widgets → Manual refresh only</li>
+              </ul>
+            </div>
+
+            <button className="bg-burnt-orange text-white px-4 py-2 rounded hover:bg-burnt-orange/90">
+              Update Dashboard Config
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Data Access */}
+      {activeTab === 'data-access' && (
+        <div className="bg-white rounded-lg shadow border p-6">
+          <h3 className="text-lg font-semibold mb-4">Data Access Control Rules</h3>
+          
+          <div className="space-y-4">
+            <div>
+              <h4 className="font-medium mb-2">Data Classification Levels</h4>
+              <div className="space-y-2">
+                <div className="border rounded p-3">
+                  <h5 className="font-medium text-red-800">Confidential</h5>
+                  <p className="text-sm text-gray-600">Financial data, user PII, business strategy</p>
+                  <p className="text-xs text-gray-500">Access: C-level executives only</p>
+                </div>
+                <div className="border rounded p-3">
+                  <h5 className="font-medium text-orange-800">Restricted</h5>
+                  <p className="text-sm text-gray-600">Detailed analytics, customer data, internal metrics</p>
+                  <p className="text-xs text-gray-500">Access: Department heads + managers</p>
+                </div>
+                <div className="border rounded p-3">
+                  <h5 className="font-medium text-blue-800">Internal</h5>
+                  <p className="text-sm text-gray-600">General platform metrics, aggregated data</p>
+                  <p className="text-xs text-gray-500">Access: All employees</p>
+                </div>
+                <div className="border rounded p-3">
+                  <h5 className="font-medium text-green-800">Public</h5>
+                  <p className="text-sm text-gray-600">Platform status, general statistics</p>
+                  <p className="text-xs text-gray-500">Access: All users</p>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h4 className="font-medium mb-2">Role-Based Access Rules</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• CEO/CFO → Full access to all data levels</li>
+                <li>• Department heads → Access to department + internal data</li>
+                <li>• Managers → Access to team + internal data</li>
+                <li>• Employees → Access to internal data only</li>
+                <li>• Contractors → Access to public data only</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-medium mb-2">Data Retention Rules</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Financial data → 7 years retention</li>
+                <li>• User analytics → 2 years retention</li>
+                <li>• Performance logs → 1 year retention</li>
+                <li>• System logs → 6 months retention</li>
+                <li>• Temporary reports → 30 days retention</li>
+              </ul>
+            </div>
+
+            <button className="bg-burnt-orange text-white px-4 py-2 rounded hover:bg-burnt-orange/90">
+              Update Access Rules
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Export Rules */}
+      {activeTab === 'export-rules' && (
+        <div className="bg-white rounded-lg shadow border p-6">
+          <h3 className="text-lg font-semibold mb-4">Data Export Configuration</h3>
+          
+          <div className="space-y-4">
+            <div>
+              <h4 className="font-medium mb-2">Allowed Export Formats</h4>
+              <div className="grid grid-cols-3 gap-2 text-sm">
+                <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded">PDF Reports</span>
+                <span className="px-3 py-1 bg-green-100 text-green-800 rounded">Excel Spreadsheets</span>
+                <span className="px-3 py-1 bg-purple-100 text-purple-800 rounded">CSV Data Files</span>
+                <span className="px-3 py-1 bg-orange-100 text-orange-800 rounded">JSON API Export</span>
+                <span className="px-3 py-1 bg-red-100 text-red-800 rounded">Image Charts</span>
+                <span className="px-3 py-1 bg-gray-100 text-gray-800 rounded">PowerPoint Slides</span>
+              </div>
+            </div>
+
+            <div>
+              <h4 className="font-medium mb-2">Export Limitations</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Maximum 100,000 rows per CSV export</li>
+                <li>• PDF reports limited to 50 pages</li>
+                <li>• Excel files limited to 10MB</li>
+                <li>• API exports rate-limited to 10 requests/hour</li>
+                <li>• Bulk exports require manager approval</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-medium mb-2">Export Security Rules</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• All exports logged with user ID and timestamp</li>
+                <li>• Confidential data exports require 2FA</li>
+                <li>• Exported files auto-expire after 7 days</li>
+                <li>• Email exports encrypted with password protection</li>
+                <li>• Download links single-use only</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-medium mb-2">Scheduled Export Rules</h4>
+              <ul className="text-sm space-y-1 text-gray-600">
+                <li>• Daily exports → Automated at 6:00 AM</li>
+                <li>• Weekly exports → Every Monday at 7:00 AM</li>
+                <li>• Monthly exports → 1st of month at 8:00 AM</li>
+                <li>• Quarterly exports → Manual trigger only</li>
+                <li>• Annual exports → December 31st at 11:59 PM</li>
+              </ul>
+            </div>
+
+            <button className="bg-burnt-orange text-white px-4 py-2 rounded hover:bg-burnt-orange/90">
+              Update Export Rules
+            </button>
           </div>
         </div>
       )}
